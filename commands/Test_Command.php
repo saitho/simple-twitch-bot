@@ -59,7 +59,7 @@ class Test_Command extends Command
     {
         parent::doExecute();
 
-        $this->setReturnMessage( 'Test erfolgreich!' );
+        $this->setReturnMessage( 'Test successful!' );
     }
 
 
