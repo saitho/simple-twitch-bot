@@ -1,6 +1,9 @@
-# Simple Twitch.tv Bot
+# Simple PHP Twitch.tv Bot
 
 I'm proud to present you my simply customizable and extensible Twitch.tv Bot.
+It's build as a boilerplate for your needs and just equipped with basic functions.
+
+Feel free to contribute! :)
 
 
 ## Requirements
@@ -25,65 +28,77 @@ I'm proud to present you my simply customizable and extensible Twitch.tv Bot.
 #### `irc.server` (Default: 192.16.64.174)
 
 List of available twitch chat servers: http://twitchstatus.com/ (Please choose one from Main Chat with ws_irc protocol)
+
 Example: "192.16.64.174"
 
 
 #### `irc.port` (Default: 6667)
 
 Port of IRC server.
+
 Example: 6667
 
 
 #### `irc.nick`
 
 The twitch username of your bot.
+
 Example: "Nightbot"
 
 
 #### `irc.channels`
 
 Seperate multiples by comma without spaces! 
+
 Example: "#channel1,#channel2"
 
 
 #### `irc.oauth`
 
 Get it from http://www.twitchapps.com/tmi/ 
+
 Example: "oauth:abcdefghi123456789"
 
 
 #### `app.language`
 
 Defines which language should be used by Config 
+
 Example: "i18n_en"
 
 
 #### `app.mods`
 
 Seperate multiples by comma without spaces! 
+
 Example: "User1,User2"
 
 
 #### `app.mem_warning` (Default: 5)
 
 Defines how much RAM usage in MB is okay for the bot. If the RAM usage is higher than this config value there will be warnings in CLI.
+
 Example: 5
 
 
 #### `app.thread_interval` (Default: 0.2)
 
 Defines how long the loop of the main thread sleeps before looking for new messages (in seconds).
+
 Example: 0.2
 
 
 #### `features.coin_system` (Default: 0)
 
 Not implemented yet :'(
+
 Example: 1
 
 
 ### Adding own command classes
 
 Sure, it's possible but I haven't finished the documentation.
+
 Maybe it helps you to create one by copying the ``commands/Test_Command.php`` and try something on your own.
+
 Documentation coming later...
