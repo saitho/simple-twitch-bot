@@ -15,7 +15,7 @@ I'm proud to present you my simply customizable and extensible Twitch.tv Bot.
 2. Extract it to a lovely place where you can execute PHP
 3. Open ``configs/config.ini`` in an editor and fill the values according to the config documentation below
 4. Open ``configs/static_commands.ini`` in an editor and set some commands with static answers
-5. Run via command line: ``php cli.php`` or set it up in a screen session (Linux)
+5. Run via command line: ``php cli.php`` or set it up in a screen session or as a daemon (Linux)
 
 
 ## Documentation
