@@ -52,6 +52,36 @@ Get it from http://www.twitchapps.com/tmi/
 Example: "oauth:abcdefghi123456789"
 
 
+#### `app.language`
+
+Defines which language should be used by Config 
+Example: "i18n_en"
+
+
+#### `app.mods`
+
+Seperate multiples by comma without spaces! 
+Example: "User1,User2"
+
+
+#### `app.mem_warning` (Default: 5)
+
+Defines how much RAM usage in MB is okay for the bot. If the RAM usage is higher than this config value there will be warnings in CLI.
+Example: 5
+
+
+#### `app.thread_interval` (Default: 0.2)
+
+Defines how long the loop of the main thread sleeps before looking for new messages (in seconds).
+Example: 0.2
+
+
+#### `features.coin_system` (Default: 0)
+
+Not implemented yet :'(
+Example: 1
+
+
 ### Adding own command classes
 
 Sure, it's possible but I haven't finished the documentation.
