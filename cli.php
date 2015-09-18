@@ -1,15 +1,7 @@
 <?php
 /**
- *
- *     |o     o    |          |
- * ,---|.,---..,---|,---.,---.|__/
- * |   |||   |||   ||---'`---.|  \
- * `---'``---|``---'`---'`---'`   `
- *       `---'    [media solutions]
- *
- * @link            http://www.digidesk.de
- * @author          Kai Neuwerth
- * @version         Git: $Id$
+ * @link        https://github.com/Crease29/simple-twitch-bot
+ * @author      Kai Neuwerth <github.com/Crease29>
  */
 
 require_once 'core/Helper.php';

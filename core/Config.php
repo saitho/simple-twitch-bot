@@ -1,18 +1,9 @@
 <?php
-
 /**
- *
- *     |o     o    |          |
- * ,---|.,---..,---|,---.,---.|__/
- * |   |||   |||   ||---'`---.|  \
- * `---'``---|``---'`---'`---'`   `
- *       `---'    [media solutions]
- *
- * @copyright   (c) digidesk - media solutions
- * @link            http://www.digidesk.de
- * @author          digidesk - media solutions
- * @version         Git: $Id$
+ * @link        https://github.com/Crease29/simple-twitch-bot
+ * @author      Kai Neuwerth <github.com/Crease29>
  */
+
 class Config
 {
     /**
