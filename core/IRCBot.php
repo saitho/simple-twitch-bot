@@ -289,7 +289,7 @@ class IRCBot
      */
     protected function _init()
     {
-        require_once 'Commander.php';
+        require_once getBasePath() . 'core/Commander.php';
         $this->setCommander( new Commander() );
 
         cliLog( "Opening socket...", 'SETUP' );

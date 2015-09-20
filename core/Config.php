@@ -23,7 +23,7 @@ class Config
      */
     public function __construct()
     {
-        $this->__aConfig = parse_ini_file( 'configs/config.ini', false, INI_SCANNER_NORMAL );
+        $this->__aConfig = parse_ini_file( getBasePath() . 'configs/config.ini', false, INI_SCANNER_NORMAL );
         cliLog( "Configuration loaded from configs/config.ini", 'SETUP' );
     }
 

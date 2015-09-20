@@ -19,3 +19,9 @@ function cliLog( $sMessage, $sType = 'INFO' )
         die( "Exiting.\n" );
     }
 }
+
+
+function getBasePath()
+{
+    return realpath( dirname( __FILE__ ) . '/../' ) . '/';
+}

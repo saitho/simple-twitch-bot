@@ -34,9 +34,9 @@ class Commander
      */
     protected function _setupCommands()
     {
-        require_once 'Command.php';
+        require_once getBasePath() . 'core/Command.php';
 
-        $aCommands = glob( 'commands/*_Command.php' );
+        $aCommands = glob( getBasePath() . 'commands/*_Command.php' );
 
         // Adding dynamic commands
         foreach ( $aCommands as $sCommandClass )
@@ -48,7 +48,7 @@ class Commander
         }
 
         // Adding static commands
-        $this->__aStaticCommands = parse_ini_file( 'configs/static_commands.ini' );
+        $this->__aStaticCommands = parse_ini_file( getBasePath() . 'configs/static_commands.ini' );
         if( count( $this->__aStaticCommands ) )
         {
             foreach ( $this->__aStaticCommands as $sCommand => $sMessage )

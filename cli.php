@@ -4,10 +4,10 @@
  * @author      Kai Neuwerth <github.com/Crease29>
  */
 
-require_once 'core/Helper.php';
-require_once 'core/Config.php';
-require_once 'core/DB.php';
-require_once 'core/IRCBot.php';
+require_once dirname( __FILE__ ) . '/core/Helper.php';
+require_once getBasePath() . 'core/Config.php';
+require_once getBasePath() . 'core/DB.php';
+require_once getBasePath() . 'core/IRCBot.php';
 
 echo "\n";
 
