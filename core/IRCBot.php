@@ -308,7 +308,7 @@ class IRCBot
      */
     protected function _getNewSocketContents()
     {
-        stream_set_blocking( $this->getSocket(), 0 );
+        //stream_set_blocking( $this->getSocket(), 0 );
         $aData = fgets( $this->getSocket(), 256 );
 
         $this->__aNewMessages = explode( ' ', $aData );
@@ -320,7 +320,7 @@ class IRCBot
      */
     protected function _getSTDINContents()
     {
-        stream_set_blocking( STDIN, 0 );
+        //stream_set_blocking( STDIN, 0 );
         $sInput = trim( fgets( STDIN ) );
 
         // ToDo: define some commands that can be typed in STDIN
