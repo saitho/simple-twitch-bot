@@ -96,6 +96,60 @@ Not implemented yet :'(
 Example: 1
 
 
+### Predefined commands
+
+#### `!commands`
+
+Sends all available commands in the chat.
+
+
+#### `!credits`
+
+This is a static command that can also be removed in ``configs/static_commands.ini``.
+
+
+#### `!donate`
+
+This is a static command that can also be removed in ``configs/static_commands.ini``.
+
+
+#### `!example`
+
+This is a static command that can also be removed in ``configs/static_commands.ini``.
+
+
+#### `!help` (alias for `!commands`)
+
+Sends all available commands in the chat.
+
+
+#### `!queue`
+
+This is a queue manager for viewergames (example usage).
+
+Available commands:
+
+- !queue join <nick>
+- !queue get <amount> (mod only)
+- !queue list (mod only)
+- !queue clear (mod only)
+
+
+#### `!welcome`
+
+Says hello to the sender or first command parameter.
+
+Available commands:
+
+- !welcome
+- !welcome <nick>
+
+
+#### `!whoami`
+
+This is a static command with a placeholder that can also be removed in ``configs/static_commands.ini``.
+
+
 ### Adding own command classes
 
 Sure, it's possible but I haven't finished the documentation.
