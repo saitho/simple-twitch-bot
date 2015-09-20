@@ -7,6 +7,10 @@
  * Class Welcome_Command
  *
  * Says hello to the sender.
+ *
+ * Usage:
+ * !welcome
+ * !welcome <nick>
  */
 class Welcome_Command extends Command
 {

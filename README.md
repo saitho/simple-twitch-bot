@@ -9,7 +9,8 @@ Feel free to contribute! :)
 ## Requirements
 
 - PHP 5.2 with CLI access
-- Connection to the internet (**lol**)
+- A Twitch.tv account
+- Connection to the internet (*lol*)
 
 
 ## Setup

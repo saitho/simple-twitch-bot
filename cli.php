@@ -9,7 +9,6 @@ require_once 'core/Config.php';
 require_once 'core/DB.php';
 require_once 'core/IRCBot.php';
 
-
 echo "\n";
 
 $oConfig = Config::getInstance();

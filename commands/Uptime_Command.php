@@ -8,6 +8,9 @@
  * Class Uptime_Command
  *
  * Returns the uptime of the bot.
+ *
+ * Usage:
+ * !uptime
  */
 class Uptime_Command extends Command
 {

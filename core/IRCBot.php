@@ -387,10 +387,9 @@ class IRCBot
                     {
                         $this->sendMessage( sprintf( $this->__aStaticMessages[ $sCommand ], $sFrom ), $sChannel );
                     }
-                    else
+                    elseif( $sCommand == 'help' || $sCommand == 'commands' )
                     {
                         $this->sendMessage( $oConfig->lang( 'AVAILABLE_COMMANDS' ) . ": " . implode( ', ', $this->getCommander()->getReadableCommands() ), $sChannel );
-
                     }
                 }
             }
