@@ -249,6 +249,14 @@ class IRCBot
         // Starting main thread
         while ( true )
         {
+            $aStatus = socket_get_status( $this->getSocket() );
+
+            if( $aStatus[ 'timed_out' ] )
+            {
+                cliLog( 'Reloading after timeout...', 'SYSTEM' );
+                new self( $sServer, $iPort, $sNick, $aChannels, $sOAuth );
+            }
+
             if( memory_get_usage( true ) / 1048576 > (double)$oConfig->get( 'app.mem_warning' ) )
             {
                 cliLog( 'Current memory usage: ' . memory_get_usage( true ) / 1048576 . 'MB', 'WARNING' );

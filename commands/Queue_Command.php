@@ -112,7 +112,7 @@ class Queue_Command extends Command
             $iPos = count( $this->__aNicks );
         }
 
-        $this->setReturnMessage( Config::getInstance()->lang( 'QUEUE_ADDED', $iPos ) );
+        $this->setReturnMessage( Config::getInstance()->lang( 'QUEUE_ADDED', array( $sSender, $iPos ) ) );
     }
 
 

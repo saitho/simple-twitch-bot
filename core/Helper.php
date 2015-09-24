@@ -4,6 +4,9 @@
  * @author      Kai Neuwerth <github.com/Crease29>
  */
 
+// Clearing Log File
+file_put_contents( getBasePath() . 'cli.log', "" );
+
 /**
  * Helper-Method for CLI logging.
  *
@@ -12,7 +15,10 @@
  */
 function cliLog( $sMessage, $sType = 'INFO' )
 {
-    echo '[' . str_pad( $sType, 11, ' ', STR_PAD_BOTH ) . '] ' . $sMessage . "\n";
+    $sLog = '[' . date( 'Y-m-d H:i:s' ) . '] [' . str_pad( $sType, 11, ' ', STR_PAD_BOTH ) . '] ' . $sMessage . "\n";
+
+    echo $sLog;
+    file_put_contents( getBasePath() . 'cli.log', $sLog, FILE_APPEND );
 
     if( $sType == 'CRITICAL' )
     {
