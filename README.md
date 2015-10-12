@@ -3,8 +3,9 @@
 I'm proud to present you my simply customizable and extensible Twitch.tv Bot.
 It's build as a boilerplate for your needs and just equipped with basic functions.
 
-Feel free to contribute! :)
+If you have any questions, you can contact me via Skype: kai_neuwerth
 
+Feel free to contribute! :)
 
 ## Requirements
 
