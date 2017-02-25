@@ -362,6 +362,14 @@ class IRCBot {
                 $this->sendMessage( $sResponseMessage, $sChannel );
             } else {
                 if( substr( $sCommand, 0, 1 ) == COMMAND_PREFIX) {
+					if(in_array(strtolower($sFrom), explode(',', Config::getInstance()->get('app.blacklist')))) {
+						$blacklistMessage = Translator::getInstance()->trans('BLACKLIST_MESSAGE');
+						if(!empty($blacklistMessage)) {
+							$this->sendMessage('/w '.$sFrom.' '.$blacklistMessage, $sChannel);
+						}
+						return 0;
+					}
+					
                     $sCommand = substr( $sCommand, 1 );
                     if( isset( $this->__aStaticMessages[ $sCommand ] ) ) {
                         $this->sendMessage( sprintf( $this->__aStaticMessages[ $sCommand ], $sFrom ), $sChannel );

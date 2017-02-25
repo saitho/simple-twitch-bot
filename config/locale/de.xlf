@@ -51,6 +51,11 @@
                 <source>QUEUE_EMPTY</source>
                 <target>Die Warteschlange ist leer.</target>
             </trans-unit>
+
+            <trans-unit id="BLACKLIST_MESSAGE">
+                <source>BLACKLIST_MESSAGE</source>
+                <target>Nope.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
