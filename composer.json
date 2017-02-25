@@ -2,8 +2,6 @@
     "name": "saitho/simple-twitch-bot",
     "type": "project",
     "require": {
-        "twig/twig": "^2.1",
-        "symfony/console": "^3.2",
         "symfony/translation": "^3.2",
         "symfony/config": "^3.2"
     },
