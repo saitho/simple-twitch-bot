@@ -5,10 +5,9 @@ namespace saitho\TwitchBot\Core;
  * @author      Kai Neuwerth <github.com/Crease29>
  */
 
-// Clearing Log File
-file_put_contents( BASE_PATH . 'cli.log', '');
-
 class GeneralUtility {
+	static private $logFile;
+		
 	/**
 	 * Helper-Method for CLI logging.
 	 *
@@ -16,10 +15,14 @@ class GeneralUtility {
 	 * @param string $sType
 	 */
 	static public function cliLog( $sMessage, $sType = 'INFO' ) {
+		if(empty(self::$logFile)) {
+			self::$logFile = BASE_PATH . 'logs/'.date('Y-m-d_H-i-s').'.log';
+		}
+		
 		$sLog = '[' . date( 'Y-m-d H:i:s' ) . '] [' . str_pad( $sType, 11, ' ', STR_PAD_BOTH ) . '] ' . $sMessage . PHP_EOL;
 		
 		echo $sLog;
-		file_put_contents( '../../cli.log', $sLog, FILE_APPEND );
+		file_put_contents( self::$logFile, $sLog, FILE_APPEND );
 		
 		if( $sType == 'CRITICAL' ) {
 			die( 'Exiting.'.PHP_EOL );
