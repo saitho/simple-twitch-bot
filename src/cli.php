@@ -15,12 +15,14 @@ require_once BASE_PATH.'vendor/autoload.php';
 echo PHP_EOL;
 
 $oConfig = \saitho\TwitchBot\Core\Config::getInstance();
+
 $oIRCBot = new \saitho\TwitchBot\Core\IRCBot(
 	$oConfig->get( 'irc.server' ),
 	$oConfig->get( 'irc.port' ),
-	$oConfig->get( 'irc.nick' ),
-	explode( ',', $oConfig->get( 'irc.channels' ) ),
-	$oConfig->get( 'irc.oauth' )
+	$oConfig->get( 'bot.nick' ),
+	#explode( ',', $oConfig->get( 'irc.channels' ) ),
+	[ '#'.$oConfig->get('app.channelName') ],
+	$oConfig->get( 'bot.oauth' )
 );
 
 echo PHP_EOL.PHP_EOL;
