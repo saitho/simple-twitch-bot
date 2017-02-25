@@ -26,34 +26,9 @@ class Commander {
     public function __construct() {
 		$this->__aConfig = GeneralUtility::getConfig();
         GeneralUtility::cliLog( 'Setting up the Commander', 'SETUP' );
-        $this->_setupCommands();
         $this->_setupFeatures();
     }
-	
-	
-	/**
-	 * Sets up all commands that are available.
-	 */
-	protected function _setupCommands() {
-		$aCommands = glob( 'src/Commands/*.php' );
 		
-		// Adding dynamic commands
-		foreach ( $aCommands as $sCommandClass ) {
-			$sClassName = basename( $sCommandClass, '.php' );
-			$this->addCommand( 'saitho\\TwitchBot\\Commands\\'.$sClassName );
-		}
-		
-		// Adding static commands
-		$this->__aStaticCommands = parse_ini_file( BASE_PATH . 'config/static_commands.ini' );
-		if( count( $this->__aStaticCommands ) ) {
-			foreach ( $this->__aStaticCommands as $sCommand => $sMessage ) {
-				$this->__aReadableCommands[] = '!' . $sCommand;
-			}
-		}
-		
-		GeneralUtility::cliLog( 'Available commands: ' . implode( ', ', $this->__aReadableCommands ), 'SETUP' );
-	}
-	
 	/**
 	 * Sets up all commands that are available.
 	 */
@@ -178,11 +153,11 @@ class Commander {
 
         // Checking for static command
         $aMessage = explode( ' ', $sMessage );
-		$firstWord = $aMessage[0];
+		$command = substr($aMessage[0], 1);
 		
-        if( is_array( $aMessage ) && in_array( substr( $firstWord, 1 ), array_keys( $this->getStaticCommands() ) ) ) {
-			GeneralUtility::cliLog( 'Static command found: ' . $firstWord, 'COMMANDER' );
-            $sReturn = sprintf( $this->getStaticCommand( substr( $firstWord, 1 ) ), '@' . $sFrom );
+        if( is_array( $aMessage ) && in_array( $command, array_keys( $this->getStaticCommands() ) ) ) {
+			GeneralUtility::cliLog( 'Static command found: !' . $command, 'COMMANDER' );
+            $sReturn = sprintf( $this->getStaticCommand($command), '@'.$sFrom );
         }
 
         // Checking for dynamic command
