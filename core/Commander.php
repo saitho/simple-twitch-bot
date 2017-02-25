@@ -22,8 +22,7 @@ class Commander
     private $__aReadableCommands = array();
 
 
-    public function __construct()
-    {
+    public function __construct() {
         cliLog( "Setting up the Commander", 'SETUP' );
         $this->_setupCommands();
     }
@@ -32,15 +31,13 @@ class Commander
     /**
      * Sets up all commands that are available.
      */
-    protected function _setupCommands()
-    {
+    protected function _setupCommands() {
         require_once getBasePath() . 'core/Command.php';
 
         $aCommands = glob( getBasePath() . 'commands/*_Command.php' );
 
         // Adding dynamic commands
-        foreach ( $aCommands as $sCommandClass )
-        {
+        foreach ( $aCommands as $sCommandClass ) {
             require_once $sCommandClass;
             $sClassName = basename( $sCommandClass, '.php' );
 
@@ -49,10 +46,8 @@ class Commander
 
         // Adding static commands
         $this->__aStaticCommands = parse_ini_file( getBasePath() . 'configs/static_commands.ini' );
-        if( count( $this->__aStaticCommands ) )
-        {
-            foreach ( $this->__aStaticCommands as $sCommand => $sMessage )
-            {
+        if( count( $this->__aStaticCommands ) ) {
+            foreach ( $this->__aStaticCommands as $sCommand => $sMessage ) {
                 $this->__aReadableCommands[] = '!' . $sCommand;
             }
         }
@@ -66,8 +61,7 @@ class Commander
      *
      * @return array
      */
-    public function getCommands()
-    {
+    public function getCommands() {
         return $this->__aCommands;
     }
 
@@ -77,8 +71,7 @@ class Commander
      *
      * @return array
      */
-    public function getStaticCommands()
-    {
+    public function getStaticCommands() {
         return $this->__aStaticCommands;
     }
 
@@ -90,8 +83,7 @@ class Commander
      *
      * @return string
      */
-    public function getStaticCommand( $sCommand )
-    {
+    public function getStaticCommand( $sCommand ) {
         return $this->__aStaticCommands[ $sCommand ];
     }
 
@@ -101,8 +93,7 @@ class Commander
      *
      * @return array
      */
-    public function getReadableCommands()
-    {
+    public function getReadableCommands() {
         return $this->__aReadableCommands;
     }
 
@@ -114,8 +105,7 @@ class Commander
      *
      * @return Command
      */
-    public function getCommand( $sCommandName )
-    {
+    public function getCommand( $sCommandName ) {
         return $this->__aCommands[ $sCommandName ][ 'oCommand' ];
     }
 
@@ -125,10 +115,8 @@ class Commander
      *
      * @param string  $sCommandName
      */
-    public function addCommand( $sCommandName )
-    {
-        if( class_exists( $sCommandName ) )
-        {
+    public function addCommand( $sCommandName ) {
+        if( class_exists( $sCommandName ) ) {
             cliLog( "Adding command: {$sCommandName}", 'SETUP' );
 
             /** @var Command $oCommand */
@@ -140,8 +128,7 @@ class Commander
                 'oCommand'         => $oCommand,
             );
 
-            if( $oCommand->isPublic() )
-            {
+            if( $oCommand->isPublic() ) {
                 $this->__aReadableCommands[] = $oCommand->getReadableCommandPattern();
             }
         }
@@ -156,23 +143,19 @@ class Commander
      *
      * @return string
      */
-    public function processMessage( $sMessage, $sFrom )
-    {
+    public function processMessage( $sMessage, $sFrom ) {
         $sReturn = '';
 
         // Checking for static command
         $aMessage = explode( ' ', $sMessage );
-        if( is_array( $aMessage ) && in_array( substr( $aMessage[ 0 ], 1 ), array_keys( $this->getStaticCommands() ) ) )
-        {
+        if( is_array( $aMessage ) && in_array( substr( $aMessage[ 0 ], 1 ), array_keys( $this->getStaticCommands() ) ) ) {
             cliLog( "Static command found: " . $aMessage[ 0 ], 'COMMANDER' );
             $sReturn = sprintf( $this->getStaticCommand( substr( $aMessage[ 0 ], 1 ) ), '@' . $sFrom );
         }
 
         // Checking for dynamic command
-        foreach ( $this->getCommands() as $aCommand )
-        {
-            if( preg_match( $aCommand[ 'sPattern' ], $sMessage ) )
-            {
+        foreach ( $this->getCommands() as $aCommand ) {
+            if( preg_match( $aCommand[ 'sPattern' ], $sMessage ) ) {
                 cliLog( "Command found: " . $aCommand[ 'sReadablePattern' ], 'COMMANDER' );
 
                 $sReturn = $aCommand[ 'oCommand' ]->execute( $sMessage, $sFrom );

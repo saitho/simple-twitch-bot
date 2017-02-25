@@ -21,8 +21,7 @@ class Config
     /**
      * Parses configs/config.ini file and saves it to an array
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->__aConfig = parse_ini_file( getBasePath() . 'configs/config.ini', false, INI_SCANNER_NORMAL );
         cliLog( "Configuration loaded from configs/config.ini", 'SETUP' );
     }
@@ -31,10 +30,8 @@ class Config
     /**
      * @return Config
      */
-    public static function getInstance()
-    {
-        if ( !self::$__instance )
-        {
+    public static function getInstance() {
+        if ( !self::$__instance ) {
             self::$__instance = new self;
         }
 
@@ -49,8 +46,7 @@ class Config
      *
      * @return null|mixed
      */
-    public function get( $sKey )
-    {
+    public function get( $sKey ) {
         return isset( $this->__aConfig[ $sKey ] ) ? $this->__aConfig[ $sKey ] : null;
     }
 
@@ -63,18 +59,15 @@ class Config
      *
      * @return mixed|null
      */
-    public function lang( $sKey, $aParams = array() )
-    {
+    public function lang( $sKey, $aParams = array() ) {
         $sTranslated = '';
         $sLanguage   = $this->__aConfig[ 'app.language' ];
 
-        if( !empty( $sLanguage ) )
-        {
+        if( !empty( $sLanguage ) ) {
             $sKey        = $sLanguage . '.' . $sKey;
             $sTranslated = isset( $this->__aConfig[ $sKey ] ) ? $this->__aConfig[ $sKey ] : null;
 
-            if( !empty( $sTranslated ) && count( $aParams ) )
-            {
+            if( !empty( $sTranslated ) && count( $aParams ) ) {
                 $sTranslated = sprintf( $sTranslated, $aParams );
             }
         }
@@ -90,8 +83,7 @@ class Config
      *
      * @return bool
      */
-    public function isMod( $sNick )
-    {
+    public function isMod( $sNick ) {
         return in_array( $sNick, explode( ',', $this->get( 'app.mods' ) ) );
     }
 }

@@ -82,8 +82,7 @@ class IRCBot
      *
      * @return null|resource
      */
-    public function getSocket()
-    {
+    public function getSocket() {
         return $this->__fpSocket;
     }
 
@@ -93,8 +92,7 @@ class IRCBot
      *
      * @return null|Commander
      */
-    public function getCommander()
-    {
+    public function getCommander() {
         return $this->__oCommander;
     }
 
@@ -104,8 +102,7 @@ class IRCBot
      *
      * @param Commander $oCommander
      */
-    public function setCommander( $oCommander )
-    {
+    public function setCommander( $oCommander ) {
         $this->__oCommander = $oCommander;
     }
 
@@ -115,8 +112,7 @@ class IRCBot
      *
      * @return string
      */
-    public function getServer()
-    {
+    public function getServer() {
         return $this->_sServer;
     }
 
@@ -126,8 +122,7 @@ class IRCBot
      *
      * @param string $sServer
      */
-    public function setServer( $sServer )
-    {
+    public function setServer( $sServer ) {
         $this->_sServer = $sServer;
     }
 
@@ -137,8 +132,7 @@ class IRCBot
      *
      * @return int
      */
-    public function getPort()
-    {
+    public function getPort() {
         return $this->_iPort;
     }
 
@@ -148,8 +142,7 @@ class IRCBot
      *
      * @param int $iPort
      */
-    public function setPort( $iPort )
-    {
+    public function setPort( $iPort ) {
         $this->_iPort = $iPort;
     }
 
@@ -159,8 +152,7 @@ class IRCBot
      *
      * @return string
      */
-    public function getNick()
-    {
+    public function getNick() {
         return $this->_sNick;
     }
 
@@ -170,8 +162,7 @@ class IRCBot
      *
      * @param string $sNick
      */
-    public function setNick( $sNick )
-    {
+    public function setNick( $sNick ) {
         $this->_sNick = $sNick;
     }
 
@@ -181,8 +172,7 @@ class IRCBot
      *
      * @return array
      */
-    public function getChannels()
-    {
+    public function getChannels() {
         return $this->_aChannels;
     }
 
@@ -192,8 +182,7 @@ class IRCBot
      *
      * @param array $aChannels
      */
-    public function setChannels( $aChannels )
-    {
+    public function setChannels( $aChannels ) {
         $this->_aChannels = $aChannels;
     }
 
@@ -203,8 +192,7 @@ class IRCBot
      *
      * @return string
      */
-    public function getOAuth()
-    {
+    public function getOAuth() {
         return $this->_sOAuth;
     }
 
@@ -214,8 +202,7 @@ class IRCBot
      *
      * @param string $sOAuth
      */
-    public function setOAuth( $sOAuth )
-    {
+    public function setOAuth( $sOAuth ) {
         $this->_sOAuth = $sOAuth;
     }
 
@@ -229,8 +216,7 @@ class IRCBot
      * @param array  $aChannels
      * @param string $sOAuth
      */
-    public function __construct( $sServer, $iPort = 6667, $sNick, $aChannels, $sOAuth )
-    {
+    public function __construct( $sServer, $iPort = 6667, $sNick, $aChannels, $sOAuth ) {
         cliLog( "Setting server: {$sServer}", 'SETUP' );
         $this->setServer( $sServer );
         cliLog( "Setting port: {$iPort}", 'SETUP' );
@@ -247,33 +233,27 @@ class IRCBot
         $oConfig = Config::getInstance();
 
         // Starting main thread
-        while ( true )
-        {
+        while ( true ) {
             $aStatus = socket_get_status( $this->getSocket() );
 
-            if( $aStatus[ 'timed_out' ] )
-            {
+            if( $aStatus[ 'timed_out' ] ) {
                 cliLog( 'Reloading after timeout...', 'SYSTEM' );
                 new self( $sServer, $iPort, $sNick, $aChannels, $sOAuth );
             }
 
-            if( memory_get_usage( true ) / 1048576 > (double)$oConfig->get( 'app.mem_warning' ) )
-            {
+            if( memory_get_usage( true ) / 1048576 > (double)$oConfig->get( 'app.mem_warning' ) ) {
                 cliLog( 'Current memory usage: ' . memory_get_usage( true ) / 1048576 . 'MB', 'WARNING' );
             }
 
             $this->_getNewSocketContents();
             //$this->_getSTDINContents();
 
-            if ( count( $this->__aNewMessages ) )
-            {
+            if ( count( $this->__aNewMessages ) ) {
                 $iReturn = $this->main();
 
                 // Checking for system operations
-                if ( $iReturn )
-                {
-                    switch ( $iReturn )
-                    {
+                if ( $iReturn ) {
+                    switch ( $iReturn ) {
                         case IRCBot::SYSTEM_RELOAD:
                             cliLog( 'Reloading...', 'SYSTEM' );
                             new self( $sServer, $iPort, $sNick, $aChannels, $sOAuth );
@@ -295,8 +275,7 @@ class IRCBot
     /**
      * Initializes the bot's functions.
      */
-    protected function _init()
-    {
+    protected function _init() {
         require_once getBasePath() . 'core/Commander.php';
         $this->setCommander( new Commander() );
 
@@ -314,8 +293,7 @@ class IRCBot
     /**
      * Fetches new messages from socket.
      */
-    protected function _getNewSocketContents()
-    {
+    protected function _getNewSocketContents() {
         //stream_set_blocking( $this->getSocket(), 0 );
         $aData = fgets( $this->getSocket(), 256 );
 
@@ -326,15 +304,13 @@ class IRCBot
     /**
      * Fetches new messages from STDIN stream.
      */
-    protected function _getSTDINContents()
-    {
+    protected function _getSTDINContents() {
         //stream_set_blocking( STDIN, 0 );
         $sInput = trim( fgets( STDIN ) );
 
         // ToDo: define some commands that can be typed in STDIN
 
-        if( !empty( $sInput ) )
-        {
+        if( !empty( $sInput ) ) {
             var_dump( $sInput );
         }
     }
@@ -345,15 +321,12 @@ class IRCBot
      *
      * @return void|int
      */
-    public function main()
-    {
-        if ( $this->__aNewMessages[ 0 ] == 'PING' )
-        {
+    public function main() {
+        if ( $this->__aNewMessages[ 0 ] == 'PING' ) {
             $this->sendData( 'PONG', $this->__aNewMessages[ 1 ] ); //Plays ping-pong with the server to stay connected.
         }
 
-        if ( isset( $this->__aNewMessages[ 3 ] ) )
-        {
+        if ( isset( $this->__aNewMessages[ 3 ] ) ) {
             $oConfig  = Config::getInstance();
             $sFrom    = ucfirst( substr( $this->__aNewMessages[ 0 ], 1, ( strpos( $this->__aNewMessages[ 0 ], '!' ) - 1 ) ) );
             $sChannel = $this->__aNewMessages[ 2 ];
@@ -364,8 +337,7 @@ class IRCBot
 
             cliLog( 'Message received from ' . $sFrom . ': "' . $sMessage . '"', 'RECEIVED' );
 
-            if( $oConfig->isMod( $sFrom ) )
-            {
+            if( $oConfig->isMod( $sFrom ) ) {
                 switch ( $sCommand ) //List of commands the bot responds to from a user.
                 {
                     case '!reload':
@@ -381,22 +353,18 @@ class IRCBot
 
             $sResponseMessage = $this->getCommander()->processMessage( $sMessage, $sFrom );
 
-            if( !empty( $sResponseMessage ) )
-            {
+            if( !empty( $sResponseMessage ) ) {
                 $this->sendMessage( $sResponseMessage, $sChannel );
             }
             else
             {
-                if( substr( $sCommand, 0, 1 ) == '!' )
-                {
+                if( substr( $sCommand, 0, 1 ) == '!' ) {
                     $sCommand = substr( $sCommand, 1 );
 
-                    if( isset( $this->__aStaticMessages[ $sCommand ] ) )
-                    {
+                    if( isset( $this->__aStaticMessages[ $sCommand ] ) ) {
                         $this->sendMessage( sprintf( $this->__aStaticMessages[ $sCommand ], $sFrom ), $sChannel );
                     }
-                    elseif( $sCommand == 'help' || $sCommand == 'commands' )
-                    {
+                    elseif( $sCommand == 'help' || $sCommand == 'commands' ) {
                         $this->sendMessage( $oConfig->lang( 'AVAILABLE_COMMANDS' ) . ": " . implode( ', ', $this->getCommander()->getReadableCommands() ), $sChannel );
                     }
                 }
@@ -413,12 +381,10 @@ class IRCBot
      * @param string $sCommand
      * @param null   $sMessage
      */
-    public function sendData( $sCommand, $sMessage = null )
-    {
+    public function sendData( $sCommand, $sMessage = null ) {
         $sPut = $sCommand;
 
-        if ( !empty( $sMessage ) )
-        {
+        if ( !empty( $sMessage ) ) {
             $sPut .= ' ' . $sMessage;
         }
 
@@ -434,8 +400,7 @@ class IRCBot
      * @param $sMessage
      * @param $sChannel
      */
-    public function sendMessage( $sMessage, $sChannel )
-    {
+    public function sendMessage( $sMessage, $sChannel ) {
         $this->sendData( "PRIVMSG $sChannel :", $sMessage );
     }
 
@@ -443,8 +408,7 @@ class IRCBot
     /**
      * Logs the bot in on the server.
      */
-    public function login()
-    {
+    public function login() {
         $this->sendData( 'PASS', $this->getOAuth() );
         $this->sendData( 'USER', $this->getNick() . ' twitch.tv ' . $this->getNick() . ' :' . $this->getNick() );
         $this->sendData( 'NICK', $this->getNick() );
@@ -456,12 +420,9 @@ class IRCBot
      *
      * @param array|string $mChannel
      */
-    public function joinChannels( $mChannel )
-    {
-        if ( is_array( $mChannel ) )
-        {
-            foreach ( $mChannel as $sChannel )
-            {
+    public function joinChannels( $mChannel ) {
+        if ( is_array( $mChannel ) ) {
+            foreach ( $mChannel as $sChannel ) {
                 $this->sendData( 'JOIN', $sChannel );
 
                 // ToDo: Check for welcome msg and send it

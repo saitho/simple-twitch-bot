@@ -20,8 +20,7 @@ function cliLog( $sMessage, $sType = 'INFO' )
     echo $sLog;
     file_put_contents( getBasePath() . 'cli.log', $sLog, FILE_APPEND );
 
-    if( $sType == 'CRITICAL' )
-    {
+    if( $sType == 'CRITICAL' ) {
         die( "Exiting.\n" );
     }
 }

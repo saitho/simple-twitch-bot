@@ -4,8 +4,10 @@
  * @author      Kai Neuwerth <github.com/Crease29>
  */
 
-class Command
-{
+class Command {
+	protected $_commandPrefix = '!';
+	protected $_commandName = '';
+	
     /**
      * Defines if a command is public. If a command is mod-only it wont be public.
      *
@@ -21,22 +23,10 @@ class Command
      */
     protected $_blIsModOnly = false;
 
-
-    /**
-     * RegEx pattern to get the triggered
-     *
-     * @var string
-     */
-    protected $_sCmdPattern = "//i";
-
-
-    /**
-     * Command that will be listed in the available commands in the chat
-     *
-     * @var string
-     */
-    protected $_sReadablePattern = '';
-
+	/**
+	 * @var array
+	 */
+    protected $_arguments = [];
 
     /**
      * Nick that initiated the execution of a command
@@ -67,8 +57,7 @@ class Command
      *
      * @return bool
      */
-    public function isPublic()
-    {
+    public function isPublic() {
         return $this->_blIsPublic && !$this->_blIsModOnly;
     }
 
@@ -78,8 +67,7 @@ class Command
      *
      * @return bool
      */
-    public function isModOnly()
-    {
+    public function isModOnly() {
         return $this->_blIsModOnly;
     }
 
@@ -88,10 +76,22 @@ class Command
      * Returns the command pattern as RegEx
      *
      * @return string
+	 * @throws \Exception
      */
-    public function getCommandPattern()
-    {
-        return $this->_sCmdPattern;
+    public function getCommandPattern() {
+		$pattern = $this->_commandPrefix.$this->_commandName;
+    	if(!empty($this->_arguments)) {
+			foreach($this->_arguments AS $argName => $arg) {
+				if(!array_key_exists('regex', $arg)) {
+					throw new \Exception('Missing key "regex" for argument '.$argName.' in command '.$this->_commandName);
+				}
+				$pattern .= '( ('.$arg['regex'].'))';
+				if(array_key_exists('optional', $arg)) {
+					$pattern .= '?';
+				}
+			}
+		}
+		return '/^'.$pattern.'$/i';
     }
 
 
@@ -100,9 +100,8 @@ class Command
      *
      * @return string
      */
-    public function getReadableCommandPattern()
-    {
-        return $this->_sReadablePattern;
+    public function getReadableCommandPattern() {
+        return $this->_commandPrefix.$this->_commandName;
     }
 
 
@@ -111,8 +110,7 @@ class Command
      *
      * @return string
      */
-    public function getSender()
-    {
+    public function getSender() {
         return $this->_sSender;
     }
 
@@ -122,8 +120,7 @@ class Command
      *
      * @param string $sSender
      */
-    public function setSender( $sSender )
-    {
+    public function setSender( $sSender ) {
         $this->_sSender = $sSender;
     }
 
@@ -133,8 +130,7 @@ class Command
      *
      * @return string
      */
-    public function getReturnMessage()
-    {
+    public function getReturnMessage() {
         return $this->_sReturnMessage;
     }
 
@@ -144,8 +140,7 @@ class Command
      *
      * @param string $sReturnMessage
      */
-    public function setReturnMessage( $sReturnMessage )
-    {
+    public function setReturnMessage( $sReturnMessage ) {
         $this->_sReturnMessage = $sReturnMessage;
     }
 
@@ -155,8 +150,7 @@ class Command
      *
      * @return string
      */
-    public function getReceivedMessage()
-    {
+    public function getReceivedMessage() {
         return $this->_sReceivedMessage;
     }
 
@@ -166,8 +160,7 @@ class Command
      *
      * @param string $sReceivedMessage
      */
-    public function setReceivedMessage( $sReceivedMessage )
-    {
+    public function setReceivedMessage( $sReceivedMessage ) {
         $this->_sReceivedMessage = $sReceivedMessage;
     }
 
@@ -177,8 +170,7 @@ class Command
      *
      * @return bool
      */
-    public function messageContainsCommand( $sMessage )
-    {
+    public function messageContainsCommand( $sMessage ) {
         $sMessage = trim( $sMessage );
 
         return (bool)preg_match( $this->getCommandPattern(), $sMessage );
@@ -190,16 +182,14 @@ class Command
      *
      * @return array
      */
-    public function getParameters()
-    {
+    public function getParameters() {
         $iMatches = preg_match_all( $this->getCommandPattern(), $this->getReceivedMessage(), $aMatches );
 
         return $iMatches > 0 ? $aMatches : array();
     }
 
 
-    public function execute( $sMessage, $sFrom )
-    {
+    public function execute( $sMessage, $sFrom ) {
         $this->setReceivedMessage( trim( $sMessage ) );
         $this->setSender( $sFrom );
         $this->setReturnMessage( '' );
@@ -217,8 +207,7 @@ class Command
      *
      * @return void
      */
-    public function onBeforeExecute()
-    {
+    public function onBeforeExecute() {
         cliLog( "Trigger " . __METHOD__, 'COMMANDER' );
     }
 
@@ -228,8 +217,7 @@ class Command
      *
      * @return void
      */
-    public function doExecute()
-    {
+    public function doExecute() {
         cliLog( "Executing command " . __CLASS__, 'COMMANDER' );
     }
 
@@ -239,8 +227,7 @@ class Command
      *
      * @return void
      */
-    public function onAfterExecute()
-    {
+    public function onAfterExecute() {
         cliLog( "Trigger " . __METHOD__, 'COMMANDER' );
     }
 }
