@@ -23,7 +23,7 @@ class Commander
 
 
     public function __construct() {
-        cliLog( "Setting up the Commander", 'SETUP' );
+        GeneralUtility::cliLog( "Setting up the Commander", 'SETUP' );
         $this->_setupCommands();
     }
 
@@ -32,9 +32,9 @@ class Commander
      * Sets up all commands that are available.
      */
     protected function _setupCommands() {
-        require_once getBasePath() . 'core/Command.php';
+        require_once BASE_PATH . 'core/Command.php';
 
-        $aCommands = glob( getBasePath() . 'commands/*_Command.php' );
+        $aCommands = glob( BASE_PATH . 'commands/*_Command.php' );
 
         // Adding dynamic commands
         foreach ( $aCommands as $sCommandClass ) {
@@ -45,14 +45,14 @@ class Commander
         }
 
         // Adding static commands
-        $this->__aStaticCommands = parse_ini_file( getBasePath() . 'configs/static_commands.ini' );
+        $this->__aStaticCommands = parse_ini_file( BASE_PATH . 'configs/static_commands.ini' );
         if( count( $this->__aStaticCommands ) ) {
             foreach ( $this->__aStaticCommands as $sCommand => $sMessage ) {
                 $this->__aReadableCommands[] = '!' . $sCommand;
             }
         }
-
-        cliLog( "Available commands: " . implode( ', ', $this->__aReadableCommands ), 'SETUP' );
+	
+		GeneralUtility::cliLog( "Available commands: " . implode( ', ', $this->__aReadableCommands ), 'SETUP' );
     }
 
 
@@ -117,7 +117,7 @@ class Commander
      */
     public function addCommand( $sCommandName ) {
         if( class_exists( $sCommandName ) ) {
-            cliLog( "Adding command: {$sCommandName}", 'SETUP' );
+			GeneralUtility::cliLog( "Adding command: {$sCommandName}", 'SETUP' );
 
             /** @var Command $oCommand */
             $oCommand = new $sCommandName;
@@ -149,14 +149,14 @@ class Commander
         // Checking for static command
         $aMessage = explode( ' ', $sMessage );
         if( is_array( $aMessage ) && in_array( substr( $aMessage[ 0 ], 1 ), array_keys( $this->getStaticCommands() ) ) ) {
-            cliLog( "Static command found: " . $aMessage[ 0 ], 'COMMANDER' );
+			GeneralUtility::cliLog( "Static command found: " . $aMessage[ 0 ], 'COMMANDER' );
             $sReturn = sprintf( $this->getStaticCommand( substr( $aMessage[ 0 ], 1 ) ), '@' . $sFrom );
         }
 
         // Checking for dynamic command
         foreach ( $this->getCommands() as $aCommand ) {
             if( preg_match( $aCommand[ 'sPattern' ], $sMessage ) ) {
-                cliLog( "Command found: " . $aCommand[ 'sReadablePattern' ], 'COMMANDER' );
+				GeneralUtility::cliLog( "Command found: " . $aCommand[ 'sReadablePattern' ], 'COMMANDER' );
 
                 $sReturn = $aCommand[ 'oCommand' ]->execute( $sMessage, $sFrom );
                 break;

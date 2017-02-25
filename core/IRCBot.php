@@ -217,15 +217,15 @@ class IRCBot
      * @param string $sOAuth
      */
     public function __construct( $sServer, $iPort = 6667, $sNick, $aChannels, $sOAuth ) {
-        cliLog( "Setting server: {$sServer}", 'SETUP' );
+		GeneralUtility::cliLog( "Setting server: {$sServer}", 'SETUP' );
         $this->setServer( $sServer );
-        cliLog( "Setting port: {$iPort}", 'SETUP' );
+		GeneralUtility::cliLog( "Setting port: {$iPort}", 'SETUP' );
         $this->setPort( $iPort );
-        cliLog( "Setting nickname: {$sNick}", 'SETUP' );
+		GeneralUtility::cliLog( "Setting nickname: {$sNick}", 'SETUP' );
         $this->setNick( $sNick );
-        cliLog( "Setting channel: " . implode( ', ', $aChannels ), 'SETUP' );
+		GeneralUtility::cliLog( "Setting channel: " . implode( ', ', $aChannels ), 'SETUP' );
         $this->setChannels( $aChannels );
-        cliLog( "Setting oauth: {$sOAuth}", 'SETUP' );
+		GeneralUtility::cliLog( "Setting oauth: {$sOAuth}", 'SETUP' );
         $this->setOAuth( $sOAuth );
 
         $this->_init();
@@ -237,12 +237,12 @@ class IRCBot
             $aStatus = socket_get_status( $this->getSocket() );
 
             if( $aStatus[ 'timed_out' ] ) {
-                cliLog( 'Reloading after timeout...', 'SYSTEM' );
+				GeneralUtility::cliLog( 'Reloading after timeout...', 'SYSTEM' );
                 new self( $sServer, $iPort, $sNick, $aChannels, $sOAuth );
             }
 
             if( memory_get_usage( true ) / 1048576 > (double)$oConfig->get( 'app.mem_warning' ) ) {
-                cliLog( 'Current memory usage: ' . memory_get_usage( true ) / 1048576 . 'MB', 'WARNING' );
+				GeneralUtility::cliLog( 'Current memory usage: ' . memory_get_usage( true ) / 1048576 . 'MB', 'WARNING' );
             }
 
             $this->_getNewSocketContents();
@@ -255,12 +255,12 @@ class IRCBot
                 if ( $iReturn ) {
                     switch ( $iReturn ) {
                         case IRCBot::SYSTEM_RELOAD:
-                            cliLog( 'Reloading...', 'SYSTEM' );
+							GeneralUtility::cliLog( 'Reloading...', 'SYSTEM' );
                             new self( $sServer, $iPort, $sNick, $aChannels, $sOAuth );
                             break;
                             break;
                         case IRCBot::SYSTEM_SHUTDOWN:
-                            cliLog( 'Shutting down...', 'SYSTEM' );
+							GeneralUtility::cliLog( 'Shutting down...', 'SYSTEM' );
                             exit;
                             break;
                     }
@@ -276,16 +276,16 @@ class IRCBot
      * Initializes the bot's functions.
      */
     protected function _init() {
-        require_once getBasePath() . 'core/Commander.php';
+        require_once BASE_PATH . 'core/Commander.php';
         $this->setCommander( new Commander() );
-
-        cliLog( "Opening socket...", 'SETUP' );
-        $this->__fpSocket = fsockopen( $this->getServer(), $this->getPort() ) or cliLog( "Unable to connect to {$this->getServer()}:{$this->getPort()}.", 'CRITICAL' );
-
-        cliLog( "Logging in to server", 'SETUP' );
+	
+		GeneralUtility::cliLog( "Opening socket...", 'SETUP' );
+        $this->__fpSocket = fsockopen( $this->getServer(), $this->getPort() ) or GeneralUtility::cliLog( "Unable to connect to {$this->getServer()}:{$this->getPort()}.", 'CRITICAL' );
+	
+		GeneralUtility::cliLog( "Logging in to server", 'SETUP' );
         $this->login();
-
-        cliLog( "Joining channels: " . implode( ', ', $this->getChannels() ), 'SETUP' );
+	
+		GeneralUtility::cliLog( "Joining channels: " . implode( ', ', $this->getChannels() ), 'SETUP' );
         $this->joinChannels( $this->getChannels() );
     }
 
@@ -334,8 +334,8 @@ class IRCBot
 
             unset( $this->__aNewMessages[ 0 ], $this->__aNewMessages[ 1 ], $this->__aNewMessages[ 2 ] );
             $sMessage = trim( implode( ' ', $this->__aNewMessages ) );
-
-            cliLog( 'Message received from ' . $sFrom . ': "' . $sMessage . '"', 'RECEIVED' );
+	
+			GeneralUtility::cliLog( 'Message received from ' . $sFrom . ': "' . $sMessage . '"', 'RECEIVED' );
 
             if( $oConfig->isMod( $sFrom ) ) {
                 switch ( $sCommand ) //List of commands the bot responds to from a user.
@@ -387,8 +387,8 @@ class IRCBot
         if ( !empty( $sMessage ) ) {
             $sPut .= ' ' . $sMessage;
         }
-
-        cliLog( $sPut, 'SENDING' );
+	
+		GeneralUtility::cliLog( $sPut, 'SENDING' );
 
         fputs( $this->getSocket(), $sPut . "\r\n" );
     }

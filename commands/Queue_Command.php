@@ -73,7 +73,7 @@ class Queue_Command extends Command {
 		$iPos = $this->__isInQueue( $sSender );
 		
 		if ( $iPos === 0 ) {
-			cliLog( "Adding {$sSender} ({$sGameNick}) to the queue.", 'QUEUE' );
+			GeneralUtility::cliLog( "Adding {$sSender} ({$sGameNick}) to the queue.", 'QUEUE' );
 			$this->__aNicks[] = array( 'twitch_nick' => $sSender, 'game_nick' => $sGameNick );
 			
 			$iPos = count( $this->__aNicks );
@@ -111,7 +111,7 @@ class Queue_Command extends Command {
 	 */
 	private function getFromQueue( $iAmount ) {
 		if ( Config::getInstance()->isMod( $this->getSender() ) && count( $this->__aNicks ) && $iAmount > 0 ) {
-			cliLog( "Fetching {$iAmount} from the queue.", 'QUEUE' );
+			GeneralUtility::cliLog( "Fetching {$iAmount} from the queue.", 'QUEUE' );
 			
 			$aPicked = array_slice( $this->__aNicks, 0, $iAmount );
 			$sPicked = '';
@@ -125,7 +125,7 @@ class Queue_Command extends Command {
 			}
 			
 			if ( !empty( $sPicked ) ) {
-				cliLog( "Picked from queue: " . substr( $sPicked, 0, -2 ), 'QUEUE' );
+				GeneralUtility::cliLog( "Picked from queue: " . substr( $sPicked, 0, -2 ), 'QUEUE' );
 				$this->setReturnMessage( Config::getInstance()->lang( 'QUEUE_PICKED' ) . ' ' . substr( $sPicked, 0, -2 ) );
 			}
 		}
@@ -141,7 +141,7 @@ class Queue_Command extends Command {
 		$iPos = $this->__isInQueue( $sNick );
 		
 		if ( $iPos !== 0 ) {
-			cliLog( "Removed {$sNick} from the queue.", 'QUEUE' );
+			GeneralUtility::cliLog( "Removed {$sNick} from the queue.", 'QUEUE' );
 			unset( $this->__aNicks[ ( $iPos - 1 ) ] );
 		}
 	}
@@ -159,10 +159,10 @@ class Queue_Command extends Command {
 		}
 		
 		if ( !empty( $sNicks ) ) {
-			cliLog( "Current queue: " . substr( $sNicks, 0, -2 ), 'QUEUE' );
+			GeneralUtility::cliLog( "Current queue: " . substr( $sNicks, 0, -2 ), 'QUEUE' );
 			$this->setReturnMessage( Config::getInstance()->lang( 'QUEUE_LIST' ) . ' ' . substr( $sNicks, 0, -2 ) );
 		} else {
-			cliLog( "Queue is empty.", 'QUEUE' );
+			GeneralUtility::cliLog( "Queue is empty.", 'QUEUE' );
 			$this->setReturnMessage( Config::getInstance()->lang( 'QUEUE_EMPTY' ) );
 		}
 	}
@@ -173,7 +173,7 @@ class Queue_Command extends Command {
 	 */
 	private function clearQueue() {
 		if ( Config::getInstance()->isMod( $this->getSender() ) ) {
-			cliLog( "Queue cleared.", 'QUEUE' );
+			GeneralUtility::cliLog( "Queue cleared.", 'QUEUE' );
 			
 			$this->__aNicks = array();
 			$this->setReturnMessage( Config::getInstance()->lang( 'QUEUE_CLEARED' ) );

@@ -22,8 +22,8 @@ class Config
      * Parses configs/config.ini file and saves it to an array
      */
     public function __construct() {
-        $this->__aConfig = parse_ini_file( getBasePath() . 'configs/config.ini', false, INI_SCANNER_NORMAL );
-        cliLog( "Configuration loaded from configs/config.ini", 'SETUP' );
+        $this->__aConfig = parse_ini_file( BASE_PATH . 'configs/config.ini', false, INI_SCANNER_NORMAL );
+		GeneralUtility::cliLog( "Configuration loaded from configs/config.ini", 'SETUP' );
     }
 
 

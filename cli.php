@@ -4,14 +4,14 @@
  * @author      Kai Neuwerth <github.com/Crease29>
  */
 
-require_once dirname( __FILE__ ) . '/core/Helper.php';
-require_once getBasePath() . 'core/Config.php';
-require_once getBasePath() . 'core/DB.php';
-require_once getBasePath() . 'core/IRCBot.php';
+require_once dirname(__FILE__) . '/core/GeneralUtility.php';
+require_once BASE_PATH . 'core/Config.php';
+require_once BASE_PATH . 'core/DB.php';
+require_once BASE_PATH . 'core/IRCBot.php';
 
-echo "\n";
+echo PHP_EOL;
 
 $oConfig = Config::getInstance();
 $oIRCBot = new IRCBot( $oConfig->get( 'irc.server' ), $oConfig->get( 'irc.port' ), $oConfig->get( 'irc.nick' ), explode( ',', $oConfig->get( 'irc.channels' ) ), $oConfig->get( 'irc.oauth' ) );
 
-echo "\n\n";
+echo PHP_EOL.PHP_EOL;
