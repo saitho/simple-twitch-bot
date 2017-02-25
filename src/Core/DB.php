@@ -5,7 +5,7 @@ namespace saitho\TwitchBot\Core;
  * @author      Kai Neuwerth <github.com/Crease29>
  */
 
-class DB extends PDO {
+class DB extends \PDO {
     /**
      * @var
      */

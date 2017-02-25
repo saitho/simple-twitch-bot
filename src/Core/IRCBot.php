@@ -355,12 +355,9 @@ class IRCBot {
 
             if( !empty( $sResponseMessage ) ) {
                 $this->sendMessage( $sResponseMessage, $sChannel );
-            }
-            else
-            {
+            } else {
                 if( substr( $sCommand, 0, 1 ) == '!' ) {
                     $sCommand = substr( $sCommand, 1 );
-
                     if( isset( $this->__aStaticMessages[ $sCommand ] ) ) {
                         $this->sendMessage( sprintf( $this->__aStaticMessages[ $sCommand ], $sFrom ), $sChannel );
                     }

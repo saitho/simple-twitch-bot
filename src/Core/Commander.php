@@ -45,7 +45,7 @@ class Commander {
         }
 
         // Adding static commands
-        $this->__aStaticCommands = parse_ini_file( BASE_PATH . 'configs/static_commands.ini' );
+        $this->__aStaticCommands = parse_ini_file( BASE_PATH . 'config/static_commands.ini' );
         if( count( $this->__aStaticCommands ) ) {
             foreach ( $this->__aStaticCommands as $sCommand => $sMessage ) {
                 $this->__aReadableCommands[] = '!' . $sCommand;

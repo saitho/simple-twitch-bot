@@ -1,4 +1,4 @@
 .idea
-/configs/config.ini
-/configs/static_commands.ini
+/config/config.ini
+/config/static_commands.ini
 /vendor/

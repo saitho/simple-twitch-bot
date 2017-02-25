@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="YEARS">
+                <source>YEARS</source>
+                <target>years</target>
+            </trans-unit>
+            <trans-unit id="DAYS">
+                <source>DAYS</source>
+                <target>days</target>
+            </trans-unit>
+            <trans-unit id="HOURS">
+                <source>HOURS</source>
+                <target>hours</target>
+            </trans-unit>
+            <trans-unit id="WELCOME">
+                <source>WELCOME</source>
+                <target>Hi @%s! I'm glad you're here!</target>
+            </trans-unit>
+            <trans-unit id="QUIT_MSG">
+                <source>QUIT_MSG</source>
+                <target>I will be right back. My master needs to maintain me.</target>
+            </trans-unit>
+            <trans-unit id="AVAILABLE_COMMANDS">
+                <source>AVAILABLE_COMMANDS</source>
+                <target>Available commands</target>
+            </trans-unit>
+
+            <trans-unit id="QUEUE_CLEARED">
+                <source>QUEUE_CLEARED</source>
+                <target>The queue has been cleared.</target>
+            </trans-unit>
+            <trans-unit id="QUEUE_ADDED">
+                <source>QUEUE_ADDED</source>
+                <target>@%s you have successfully entered the queue on place #%d.</target>
+            </trans-unit>
+            <trans-unit id="QUEUE_PICKED">
+                <source>QUEUE_PICKED</source>
+                <target>The following viewers were chosen from the queue:</target>
+            </trans-unit>
+            <trans-unit id="QUEUE_LIST">
+                <source>QUEUE_LIST</source>
+                <target>The following viewers are currently in the queue:</target>
+            </trans-unit>
+            <trans-unit id="QUEUE_EMPTY">
+                <source>QUEUE_EMPTY</source>
+                <target>The queue is empty.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

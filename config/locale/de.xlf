@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="de" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="YEARS">
+                <source>YEARS</source>
+                <target>Jahre</target>
+            </trans-unit>
+            <trans-unit id="DAYS">
+                <source>DAYS</source>
+                <target>Tage</target>
+            </trans-unit>
+            <trans-unit id="HOURS">
+                <source>HOURS</source>
+                <target>Stunden</target>
+            </trans-unit>
+            <trans-unit id="WELCOME">
+                <source>WELCOME</source>
+                <target>Hallo @%s! Schön, dass du dabei bist!</target>
+            </trans-unit>
+            <trans-unit id="QUIT_MSG">
+                <source>QUIT_MSG</source>
+                <target>I will be right back. My master needs to maintain me.</target>
+            </trans-unit>
+            <trans-unit id="AVAILABLE_COMMANDS">
+                <source>AVAILABLE_COMMANDS</source>
+                <target>Verfügbare Befehle</target>
+            </trans-unit>
+
+            <trans-unit id="QUEUE_CLEARED">
+                <source>QUEUE_CLEARED</source>
+                <target>Die Warteschlange wurde geleert.</target>
+            </trans-unit>
+            <trans-unit id="QUEUE_ADDED">
+                <source>QUEUE_ADDED</source>
+                <target>@%s du hast dich erfolgreich in die Warteschlange eingetragen und bist aktuell auf Platz #%d.</target>
+            </trans-unit>
+            <trans-unit id="QUEUE_PICKED">
+                <source>QUEUE_PICKED</source>
+                <target>Die folgenden Zuschauer wurden aus der Warteschlange gewählt:</target>
+            </trans-unit>
+            <trans-unit id="QUEUE_LIST">
+                <source>QUEUE_LIST</source>
+                <target>Folgende Zuschauer befinden sich in der Warteschlange:</target>
+            </trans-unit>
+            <trans-unit id="QUEUE_EMPTY">
+                <source>QUEUE_EMPTY</source>
+                <target>Die Warteschlange ist leer.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

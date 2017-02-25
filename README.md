@@ -18,8 +18,8 @@ Feel free to contribute! :)
 
 1. Download this repository
 2. Extract it to a lovely place where you can execute PHP
-3. Open ``configs/config.ini`` in an editor and fill the values according to the config documentation below
-4. Open ``configs/static_commands.ini`` in an editor and set some commands with static answers
+3. Open ``config/config.ini`` in an editor and fill the values according to the config documentation below
+4. Open ``config/static_commands.ini`` in an editor and set some commands with static answers
 5. Run via command line: ``php cli.php`` or set it up in a screen session or as a daemon (Linux)
 
 
@@ -106,17 +106,17 @@ Sends all available commands in the chat.
 
 #### `!credits`
 
-This is a static command that can also be removed in ``configs/static_commands.ini``.
+This is a static command that can also be removed in ``config/static_commands.ini``.
 
 
 #### `!donate`
 
-This is a static command that can also be removed in ``configs/static_commands.ini``.
+This is a static command that can also be removed in ``config/static_commands.ini``.
 
 
 #### `!example`
 
-This is a static command that can also be removed in ``configs/static_commands.ini``.
+This is a static command that can also be removed in ``config/static_commands.ini``.
 
 
 #### `!help` (alias for `!commands`)
@@ -148,7 +148,7 @@ Available commands:
 
 #### `!whoami`
 
-This is a static command with a placeholder that can also be removed in ``configs/static_commands.ini``.
+This is a static command with a placeholder that can also be removed in ``config/static_commands.ini``.
 
 
 ### Adding own command classes
