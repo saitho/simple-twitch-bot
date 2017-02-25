@@ -13,7 +13,6 @@ class Test extends Command {
      * @var bool
      */
     protected $_blIsPublic = false;
-    
 	protected $_commandName = 'test';
 
     /**

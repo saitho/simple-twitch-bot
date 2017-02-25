@@ -47,7 +47,6 @@ class Queue extends Command {
 	public function doExecute() {
 		parent::doExecute();
 		
-		$sMessage = $this->getReceivedMessage();
 		$aArgs = $this->getParameters();
 		$sAction = $aArgs[ 2 ][ 0 ];
 		

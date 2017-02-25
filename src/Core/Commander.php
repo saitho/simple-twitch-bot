@@ -38,7 +38,6 @@ class Commander {
 
         // Adding dynamic commands
         foreach ( $aCommands as $sCommandClass ) {
-            require_once $sCommandClass;
             $sClassName = basename( $sCommandClass, '.php' );
 
             $this->addCommand( $sClassName );

@@ -320,7 +320,7 @@ class IRCBot {
     /**
      * This is the workhorse function, grabs the data from the server and displays on the browser
      *
-     * @return void|int
+     * @return int
      */
     public function main() {
         if ( $this->__aNewMessages[ 0 ] == 'PING' ) {
@@ -371,8 +371,7 @@ class IRCBot {
                 }
             }
         }
-
-        return;
+        return 0;
     }
 
 

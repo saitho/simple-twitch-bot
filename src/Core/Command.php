@@ -169,11 +169,11 @@ class Command {
     /**
      * Checks if a message contains a command
      *
+	 * @param string $sMessage
      * @return bool
      */
     public function messageContainsCommand( $sMessage ) {
         $sMessage = trim( $sMessage );
-
         return (bool)preg_match( $this->getCommandPattern(), $sMessage );
     }
 
