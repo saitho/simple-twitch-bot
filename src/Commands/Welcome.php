@@ -41,8 +41,8 @@ class Welcome extends Command {
         $aArgs        = $this->getParameters();
 
         // Checking if there is a name given that shall be greeted
-        if( isset( $aArgs[ 2 ][ 0 ] ) && !empty( $aArgs[ 2 ][ 0 ] ) ) {
-            $sToBeGreeted = $aArgs[ 2 ][ 0 ];
+        if( isset( $aArgs[ 1 ][ 0 ] ) && !empty( $aArgs[ 1 ][ 0 ] ) ) {
+            $sToBeGreeted = $aArgs[ 1 ][ 0 ];
         }
 
         $this->setReturnMessage( Config::getInstance()->lang( 'WELCOME', $sToBeGreeted ) );

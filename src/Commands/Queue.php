@@ -53,14 +53,14 @@ class Queue extends Command {
 		parent::doExecute();
 		
 		$aArgs = $this->getParameters();
-		$sAction = $aArgs[ 2 ][ 0 ];
+		$sAction = $aArgs[ 1 ][ 0 ];
 		
 		switch ( $sAction ) {
 			case 'join':
-				$this->addToQueue( $this->getSender(), ( !empty( $aArgs[ 4 ][ 0 ] ) ? $aArgs[ 4 ][ 0 ] : $this->getSender() ) );
+				$this->addToQueue( $this->getSender(), ( !empty( $aArgs[ 2 ][ 0 ] ) ? $aArgs[ 2 ][ 0 ] : $this->getSender() ) );
 				break;
 			case 'get':
-				$this->getFromQueue( ( !empty( $aArgs[ 4 ][ 0 ] ) ? (int)$aArgs[ 4 ][ 0 ] : 1 ) );
+				$this->getFromQueue( ( !empty( $aArgs[ 2 ][ 0 ] ) ? (int)$aArgs[ 2 ][ 0 ] : 1 ) );
 				break;
 			case 'list':
 				$this->listAll();

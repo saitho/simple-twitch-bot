@@ -92,7 +92,7 @@ class Command {
 				if(!array_key_exists('regex', $arg)) {
 					throw new \Exception('Missing key "regex" for argument '.$argName.' in command '.$this->_commandName);
 				}
-				$pattern .= '( ('.$arg['regex'].'))';
+				$pattern .= '\s?('.$arg['regex'].')';
 				if(array_key_exists('optional', $arg)) {
 					$pattern .= '?';
 				}
