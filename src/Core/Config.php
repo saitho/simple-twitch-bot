@@ -93,6 +93,6 @@ class Config {
      * @return bool
      */
     public function isMod( $sNick ) {
-        return in_array( $sNick, explode( ',', $this->get( 'app.mods' ) ) );
+        return in_array( strtolower($sNick), explode( ',', $this->get( 'app.mods' ) ) );
     }
 }
