@@ -71,12 +71,12 @@ class Config {
         
         $translator = new Translator($sLanguage);
 		$translator->addLoader('xlf', new XliffFileLoader());
-		$translationFiles = glob( 'config/locale/*.xlf' );
+		$translationFiles = glob( BASE_PATH.'config/locale/*.xlf' );
 		foreach($translationFiles AS $translationFile) {
-			preg_match('/^config\/locale\/(.*)\.xlf$/', $translationFile, $match);
+			preg_match('/config\/locale\/(.*)\.xlf$/', $translationFile, $match);
 			$translator->addResource('xlf', $translationFile, $match[1]);
 		}
-		$translator->addResource('xlf', 'config/locale/en.xlf', 'en');
+		$translator->addResource('xlf', BASE_PATH.'config/locale/en.xlf', 'en');
 		$sTranslated = $translator->trans($sKey);
 	
 		if( !empty( $sTranslated ) && count( $aParams ) ) {

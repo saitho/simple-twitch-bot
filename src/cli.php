@@ -9,8 +9,8 @@
  * @link        https://github.com/saitho/simple-twitch-bot/
  */
 
-require_once 'vendor/autoload.php';
-define('BASE_PATH', realpath( dirname( __FILE__ ) . '/' ) . '/');
+define('BASE_PATH', realpath( dirname( __FILE__ ) . '/../' ) . '/');
+require_once BASE_PATH.'vendor/autoload.php';
 
 echo PHP_EOL;
 
