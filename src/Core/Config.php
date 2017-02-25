@@ -29,7 +29,7 @@ class Config {
      * Parses configs/config.ini file and saves it to an array
      */
     public function __construct() {
-        $this->__aConfig = parse_ini_file( BASE_PATH . 'config/config.ini', false, INI_SCANNER_NORMAL );
+        $this->__aConfig = GeneralUtility::getConfig();
 		GeneralUtility::cliLog( 'Configuration loaded from config/config.ini', 'SETUP' );
     }
 

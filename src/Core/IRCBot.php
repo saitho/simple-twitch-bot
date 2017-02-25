@@ -282,7 +282,6 @@ class IRCBot {
      * Initializes the bot's functions.
      */
     protected function _init() {
-        require_once 'Commander.php';
         $this->setCommander( new Commander() );
 	
 		GeneralUtility::cliLog( 'Opening socket...', 'SETUP' );

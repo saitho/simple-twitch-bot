@@ -13,6 +13,14 @@ namespace saitho\TwitchBot\Core;
 
 class GeneralUtility {
 	static private $logFile;
+	static private $aConfig = [];
+	
+	static public function getConfig() {
+		if(empty(self::$aConfig)) {
+			self::$aConfig = parse_ini_file( BASE_PATH . 'config/config.ini', false, INI_SCANNER_NORMAL );
+		}
+		return self::$aConfig;
+	}
 		
 	/**
 	 * Helper-Method for CLI logging.
