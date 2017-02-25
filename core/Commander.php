@@ -4,8 +4,7 @@
  * @author      Kai Neuwerth <github.com/Crease29>
  */
 
-class Commander
-{
+class Commander {
     /**
      * @var array
      */
@@ -23,7 +22,7 @@ class Commander
 
 
     public function __construct() {
-        GeneralUtility::cliLog( "Setting up the Commander", 'SETUP' );
+        GeneralUtility::cliLog( 'Setting up the Commander', 'SETUP' );
         $this->_setupCommands();
     }
 
@@ -52,7 +51,7 @@ class Commander
             }
         }
 	
-		GeneralUtility::cliLog( "Available commands: " . implode( ', ', $this->__aReadableCommands ), 'SETUP' );
+		GeneralUtility::cliLog( 'Available commands: ' . implode( ', ', $this->__aReadableCommands ), 'SETUP' );
     }
 
 
@@ -117,7 +116,7 @@ class Commander
      */
     public function addCommand( $sCommandName ) {
         if( class_exists( $sCommandName ) ) {
-			GeneralUtility::cliLog( "Adding command: {$sCommandName}", 'SETUP' );
+			GeneralUtility::cliLog( 'Adding command: '.$sCommandName, 'SETUP' );
 
             /** @var Command $oCommand */
             $oCommand = new $sCommandName;
@@ -149,16 +148,18 @@ class Commander
         // Checking for static command
         $aMessage = explode( ' ', $sMessage );
         if( is_array( $aMessage ) && in_array( substr( $aMessage[ 0 ], 1 ), array_keys( $this->getStaticCommands() ) ) ) {
-			GeneralUtility::cliLog( "Static command found: " . $aMessage[ 0 ], 'COMMANDER' );
+			GeneralUtility::cliLog( 'Static command found: ' . $aMessage[ 0 ], 'COMMANDER' );
             $sReturn = sprintf( $this->getStaticCommand( substr( $aMessage[ 0 ], 1 ) ), '@' . $sFrom );
         }
 
         // Checking for dynamic command
         foreach ( $this->getCommands() as $aCommand ) {
             if( preg_match( $aCommand[ 'sPattern' ], $sMessage ) ) {
-				GeneralUtility::cliLog( "Command found: " . $aCommand[ 'sReadablePattern' ], 'COMMANDER' );
+				GeneralUtility::cliLog( 'Command found: ' . $aCommand[ 'sReadablePattern' ], 'COMMANDER' );
 
-                $sReturn = $aCommand[ 'oCommand' ]->execute( $sMessage, $sFrom );
+				/** @var Command $oCommand */
+				$oCommand = $aCommand[ 'oCommand' ];
+                $sReturn = $oCommand->execute( $sMessage, $sFrom );
                 break;
             }
         }

@@ -12,6 +12,12 @@ require_once BASE_PATH . 'core/IRCBot.php';
 echo PHP_EOL;
 
 $oConfig = Config::getInstance();
-$oIRCBot = new IRCBot( $oConfig->get( 'irc.server' ), $oConfig->get( 'irc.port' ), $oConfig->get( 'irc.nick' ), explode( ',', $oConfig->get( 'irc.channels' ) ), $oConfig->get( 'irc.oauth' ) );
+$oIRCBot = new IRCBot(
+	$oConfig->get( 'irc.server' ),
+	$oConfig->get( 'irc.port' ),
+	$oConfig->get( 'irc.nick' ),
+	explode( ',', $oConfig->get( 'irc.channels' ) ),
+	$oConfig->get( 'irc.oauth' )
+);
 
 echo PHP_EOL.PHP_EOL;

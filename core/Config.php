@@ -4,8 +4,7 @@
  * @author      Kai Neuwerth <github.com/Crease29>
  */
 
-class Config
-{
+class Config {
     /**
      * @var Config
      */
@@ -23,7 +22,7 @@ class Config
      */
     public function __construct() {
         $this->__aConfig = parse_ini_file( BASE_PATH . 'configs/config.ini', false, INI_SCANNER_NORMAL );
-		GeneralUtility::cliLog( "Configuration loaded from configs/config.ini", 'SETUP' );
+		GeneralUtility::cliLog( 'Configuration loaded from configs/config.ini', 'SETUP' );
     }
 
 

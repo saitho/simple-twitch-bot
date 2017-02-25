@@ -217,15 +217,15 @@ class IRCBot
      * @param string $sOAuth
      */
     public function __construct( $sServer, $iPort = 6667, $sNick, $aChannels, $sOAuth ) {
-		GeneralUtility::cliLog( "Setting server: {$sServer}", 'SETUP' );
+		GeneralUtility::cliLog( 'Setting server: '.$sServer, 'SETUP' );
         $this->setServer( $sServer );
-		GeneralUtility::cliLog( "Setting port: {$iPort}", 'SETUP' );
+		GeneralUtility::cliLog( 'Setting port: '.$iPort, 'SETUP' );
         $this->setPort( $iPort );
-		GeneralUtility::cliLog( "Setting nickname: {$sNick}", 'SETUP' );
+		GeneralUtility::cliLog( 'Setting nickname: '.$sNick, 'SETUP' );
         $this->setNick( $sNick );
-		GeneralUtility::cliLog( "Setting channel: " . implode( ', ', $aChannels ), 'SETUP' );
+		GeneralUtility::cliLog( 'Setting channel: ' . implode( ', ', $aChannels ), 'SETUP' );
         $this->setChannels( $aChannels );
-		GeneralUtility::cliLog( "Setting oauth: {$sOAuth}", 'SETUP' );
+		GeneralUtility::cliLog( 'Setting oauth: '.$sOAuth, 'SETUP' );
         $this->setOAuth( $sOAuth );
 
         $this->_init();
@@ -279,13 +279,14 @@ class IRCBot
         require_once BASE_PATH . 'core/Commander.php';
         $this->setCommander( new Commander() );
 	
-		GeneralUtility::cliLog( "Opening socket...", 'SETUP' );
-        $this->__fpSocket = fsockopen( $this->getServer(), $this->getPort() ) or GeneralUtility::cliLog( "Unable to connect to {$this->getServer()}:{$this->getPort()}.", 'CRITICAL' );
+		GeneralUtility::cliLog( 'Opening socket...', 'SETUP' );
+        $this->__fpSocket = fsockopen( $this->getServer(), $this->getPort() )
+		or GeneralUtility::cliLog( 'Unable to connect to '.$this->getServer().':'.$this->getPort(), 'CRITICAL' );
 	
-		GeneralUtility::cliLog( "Logging in to server", 'SETUP' );
+		GeneralUtility::cliLog( 'Logging in to server', 'SETUP' );
         $this->login();
 	
-		GeneralUtility::cliLog( "Joining channels: " . implode( ', ', $this->getChannels() ), 'SETUP' );
+		GeneralUtility::cliLog( 'Joining channels: ' . implode( ', ', $this->getChannels() ), 'SETUP' );
         $this->joinChannels( $this->getChannels() );
     }
 
@@ -335,17 +336,16 @@ class IRCBot
             unset( $this->__aNewMessages[ 0 ], $this->__aNewMessages[ 1 ], $this->__aNewMessages[ 2 ] );
             $sMessage = trim( implode( ' ', $this->__aNewMessages ) );
 	
-			GeneralUtility::cliLog( 'Message received from ' . $sFrom . ': "' . $sMessage . '"', 'RECEIVED' );
+			GeneralUtility::cliLog( 'Message received from ' . $sFrom . ': ' . $sMessage, 'RECEIVED' );
 
             if( $oConfig->isMod( $sFrom ) ) {
-                switch ( $sCommand ) //List of commands the bot responds to from a user.
-                {
+                switch ( $sCommand ) { //List of commands the bot responds to from a user.
                     case '!reload':
                         return IRCBot::SYSTEM_RELOAD;
                         break;
                     case '!shutdown':
-                        $this->sendData( "PRIVMSG {$sChannel} :", $oConfig->lang( 'QUIT_MSG' ) );
-                        $this->sendData( "QUIT", $oConfig->lang( 'QUIT_MSG' ) );
+                        $this->sendData( 'PRIVMSG '.$sChannel.' :', $oConfig->lang( 'QUIT_MSG' ) );
+                        $this->sendData( 'QUIT', $oConfig->lang( 'QUIT_MSG' ) );
                         return IRCBot::SYSTEM_SHUTDOWN;
                         break;
                 }
@@ -365,7 +365,11 @@ class IRCBot
                         $this->sendMessage( sprintf( $this->__aStaticMessages[ $sCommand ], $sFrom ), $sChannel );
                     }
                     elseif( $sCommand == 'help' || $sCommand == 'commands' ) {
-                        $this->sendMessage( $oConfig->lang( 'AVAILABLE_COMMANDS' ) . ": " . implode( ', ', $this->getCommander()->getReadableCommands() ), $sChannel );
+                        $this->sendMessage(
+                        	$oConfig->lang( 'AVAILABLE_COMMANDS' ) .
+							': ' . implode( ', ', $this->getCommander()->getReadableCommands() ),
+							$sChannel
+						);
                     }
                 }
             }
@@ -389,8 +393,7 @@ class IRCBot
         }
 	
 		GeneralUtility::cliLog( $sPut, 'SENDING' );
-
-        fputs( $this->getSocket(), $sPut . "\r\n" );
+        fputs( $this->getSocket(), $sPut . PHP_EOL );
     }
 
 
@@ -401,7 +404,7 @@ class IRCBot
      * @param $sChannel
      */
     public function sendMessage( $sMessage, $sChannel ) {
-        $this->sendData( "PRIVMSG $sChannel :", $sMessage );
+        $this->sendData( 'PRIVMSG '.$sChannel.' :', $sMessage );
     }
 
 

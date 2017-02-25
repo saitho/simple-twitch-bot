@@ -16,13 +16,13 @@ class GeneralUtility {
 	 * @param string $sType
 	 */
 	static public function cliLog( $sMessage, $sType = 'INFO' ) {
-		$sLog = '[' . date( 'Y-m-d H:i:s' ) . '] [' . str_pad( $sType, 11, ' ', STR_PAD_BOTH ) . '] ' . $sMessage . "\n";
+		$sLog = '[' . date( 'Y-m-d H:i:s' ) . '] [' . str_pad( $sType, 11, ' ', STR_PAD_BOTH ) . '] ' . $sMessage . PHP_EOL;
 		
 		echo $sLog;
 		file_put_contents( BASE_PATH . 'cli.log', $sLog, FILE_APPEND );
 		
 		if( $sType == 'CRITICAL' ) {
-			die( "Exiting.\n" );
+			die( 'Exiting.'.PHP_EOL );
 		}
 	}
 }
