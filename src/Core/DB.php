@@ -49,11 +49,11 @@ class DB extends \PDO {
 
 
     /**
-     * @return PDO
+     * @return \PDO
      */
     public static function getInstance() {
         if ( !self::$__instance ) {
-            self::$__instance = new PDO(
+            self::$__instance = new \PDO(
             	'mysql:host=' . self::$__sHost . ';dbname=' . self::$__sDatabase . ';charset=' . self::$__sCharset . ';',
 				self::$__sUser,
 				self::$__sPassword
