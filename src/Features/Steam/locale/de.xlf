@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="de" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="STEAM_ACHIEVEMENTS_UNLOCKED">
+                <source>STEAM_ACHIEVEMENTS_UNLOCKED</source>
+                <target>%unlocked%/%total% Achievements freigeschaltet</target>
+            </trans-unit>
+            <trans-unit id="STEAM_ACHIEVEMENTS_UNLOCKED_LATEST">
+                <source>STEAM_ACHIEVEMENTS_UNLOCKED_LATEST</source>
+                <target>%unlocked%/%total% Achievements freigeschaltet, zuletzt: %latestName% am %latestDate%</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
