@@ -12,22 +12,8 @@
  * Usage:
  * !uptime
  */
-class Uptime_Command extends Command
-{
-    /**
-     * RegEx pattern to get the triggered
-     *
-     * @var string
-     */
-    protected $_sCmdPattern = "/^!uptime/i";
-
-
-    /**
-     * Command that will be listed in the available commands in the chat
-     *
-     * @var string
-     */
-    protected $_sReadablePattern = '!uptime';
+class Uptime_Command extends Command {
+	protected $_commandName = 'uptime';
 
 
     /**
@@ -36,8 +22,7 @@ class Uptime_Command extends Command
     private $__oStartDateTime = null;
 
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->__oStartDateTime = new DateTime();
     }
 
@@ -45,8 +30,7 @@ class Uptime_Command extends Command
     /**
      * Calculates current uptime of the bot
      */
-    public function doExecute()
-    {
+    public function doExecute() {
         parent::doExecute();
 
         $oNow = new DateTime();
