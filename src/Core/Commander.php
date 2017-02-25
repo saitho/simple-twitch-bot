@@ -35,12 +35,12 @@ class Commander {
 	 * Sets up all commands that are available.
 	 */
 	protected function _setupCommands() {
-		$aCommands = glob( 'Commands/*.php' );
+		$aCommands = glob( 'src/Commands/*.php' );
 		
 		// Adding dynamic commands
 		foreach ( $aCommands as $sCommandClass ) {
 			$sClassName = basename( $sCommandClass, '.php' );
-			$this->addCommand( $sClassName );
+			$this->addCommand( 'saitho\\TwitchBot\\Commands\\'.$sClassName );
 		}
 		
 		// Adding static commands
@@ -169,9 +169,11 @@ class Commander {
 
         // Checking for static command
         $aMessage = explode( ' ', $sMessage );
-        if( is_array( $aMessage ) && in_array( substr( $aMessage[ 0 ], 1 ), array_keys( $this->getStaticCommands() ) ) ) {
-			GeneralUtility::cliLog( 'Static command found: ' . $aMessage[ 0 ], 'COMMANDER' );
-            $sReturn = sprintf( $this->getStaticCommand( substr( $aMessage[ 0 ], 1 ) ), '@' . $sFrom );
+		$firstWord = $aMessage[0];
+		
+        if( is_array( $aMessage ) && in_array( substr( $firstWord, 1 ), array_keys( $this->getStaticCommands() ) ) ) {
+			GeneralUtility::cliLog( 'Static command found: ' . $firstWord, 'COMMANDER' );
+            $sReturn = sprintf( $this->getStaticCommand( substr( $firstWord, 1 ) ), '@' . $sFrom );
         }
 
         // Checking for dynamic command

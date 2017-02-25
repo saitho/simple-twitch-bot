@@ -12,6 +12,8 @@
 namespace saitho\TwitchBot\Core;
 
 class Command {
+	/** @var Config $config */
+	protected $config = null;
 	protected $_commandPrefix = '!';
 	protected $_commandName = '';
 	
@@ -21,8 +23,7 @@ class Command {
      * @var bool
      */
     protected $_blIsPublic = true;
-
-
+	
     /**
      * Defines if a command can only be used by admin or everyone.
      *
@@ -58,8 +59,11 @@ class Command {
      */
     protected $_sReturnMessage = '';
 
-
-    /**
+    public function __construct() {
+    	$this->config = Config::getInstance();
+	}
+	
+	/**
      * Returns if a command is public. If a command is mod-only it wont be public.
      *
      * @return bool
@@ -180,7 +184,7 @@ class Command {
      */
     public function messageContainsCommand( $sMessage ) {
         $sMessage = trim( $sMessage );
-        return (bool)preg_match( $this->getCommandPattern(), $sMessage );
+        return boolval(preg_match( $this->getCommandPattern(), $sMessage ));
     }
 
 

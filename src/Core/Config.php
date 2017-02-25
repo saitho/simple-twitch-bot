@@ -10,8 +10,6 @@
  */
 
 namespace saitho\TwitchBot\Core;
-use Symfony\Component\Translation\Loader\XliffFileLoader;
-use Symfony\Component\Translation\Translator;
 
 class Config {
     /**
@@ -38,10 +36,9 @@ class Config {
      * @return Config
      */
     public static function getInstance() {
-        if ( !self::$__instance ) {
+        if (empty(self::$__instance)) {
             self::$__instance = new self;
         }
-
         return self::$__instance;
     }
 
@@ -51,38 +48,13 @@ class Config {
      *
      * @param $sKey
      *
-     * @return null|mixed
+     * @return mixed
      */
     public function get( $sKey ) {
-        return isset( $this->__aConfig[ $sKey ] ) ? $this->__aConfig[ $sKey ] : null;
-    }
-
-
-    /**
-     * Helper function to get a language string from the config.
-     *
-     * @param string $sKey
-     * @param array  $aParams
-     *
-     * @return mixed|null
-     */
-    public function lang( $sKey, $aParams = array() ) {
-        $sLanguage   = $this->__aConfig[ 'app.language' ];
-        
-        $translator = new Translator($sLanguage);
-		$translator->addLoader('xlf', new XliffFileLoader());
-		$translationFiles = glob( BASE_PATH.'config/locale/*.xlf' );
-		foreach($translationFiles AS $translationFile) {
-			preg_match('/config\/locale\/(.*)\.xlf$/', $translationFile, $match);
-			$translator->addResource('xlf', $translationFile, $match[1]);
+    	if(!array_key_exists($sKey, $this->__aConfig)) {
+    		return null;
 		}
-		$translator->addResource('xlf', BASE_PATH.'config/locale/en.xlf', 'en');
-		$sTranslated = $translator->trans($sKey);
-	
-		if( !empty( $sTranslated ) && count( $aParams ) ) {
-			$sTranslated = sprintf( $sTranslated, $aParams );
-		}
-        return $sTranslated;
+        return $this->__aConfig[ $sKey ];
     }
 
     /**

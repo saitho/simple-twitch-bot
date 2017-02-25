@@ -14,6 +14,10 @@
                 <source>HOURS</source>
                 <target>hours</target>
             </trans-unit>
+            <trans-unit id="MINUTES">
+                <source>MINUTES</source>
+                <target>minutes</target>
+            </trans-unit>
             <trans-unit id="WELCOME">
                 <source>WELCOME</source>
                 <target>Hi @%s! I'm glad you're here!</target>

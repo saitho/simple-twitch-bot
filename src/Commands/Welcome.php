@@ -11,7 +11,8 @@
 
 namespace saitho\TwitchBot\Commands;
 use saitho\TwitchBot\Core\Command;
-use saitho\TwitchBot\Core\Config;
+
+use saitho\TwitchBot\Core\Translator;
 
 /**
  * Class Welcome_Command
@@ -25,7 +26,7 @@ use saitho\TwitchBot\Core\Config;
 class Welcome extends Command {
 	protected $_commandName = 'welcome';
 	protected $_arguments = [
-		'arg1' => [
+		[
 			'regex' => '[a-z0-9_-]+',
 			'optional' => true
 		]
@@ -45,6 +46,6 @@ class Welcome extends Command {
             $sToBeGreeted = $aArgs[ 1 ][ 0 ];
         }
 
-        $this->setReturnMessage( Config::getInstance()->lang( 'WELCOME', $sToBeGreeted ) );
+        $this->setReturnMessage( Translator::getInstance()->trans( 'WELCOME', $sToBeGreeted ) );
     }
 }

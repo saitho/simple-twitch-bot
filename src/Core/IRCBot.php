@@ -349,8 +349,8 @@ class IRCBot {
                         return IRCBot::SYSTEM_RELOAD;
                         break;
                     case '!shutdown':
-                        $this->sendData( 'PRIVMSG '.$sChannel.' :', $oConfig->lang( 'QUIT_MSG' ) );
-                        $this->sendData( 'QUIT', $oConfig->lang( 'QUIT_MSG' ) );
+                        $this->sendData( 'PRIVMSG '.$sChannel.' :', Translator::getInstance()->trans( 'QUIT_MSG' ) );
+                        $this->sendData( 'QUIT', Translator::getInstance()->trans( 'QUIT_MSG' ) );
                         return IRCBot::SYSTEM_SHUTDOWN;
                         break;
                 }
@@ -368,7 +368,7 @@ class IRCBot {
                     }
                     elseif( $sCommand == 'help' || $sCommand == 'commands' ) {
                         $this->sendMessage(
-                        	$oConfig->lang( 'AVAILABLE_COMMANDS' ) .
+							Translator::getInstance()->trans( 'AVAILABLE_COMMANDS' ) .
 							': ' . implode( ', ', $this->getCommander()->getReadableCommands() ),
 							$sChannel
 						);

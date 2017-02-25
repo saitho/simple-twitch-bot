@@ -11,7 +11,8 @@
 
 namespace saitho\TwitchBot\Commands;
 use saitho\TwitchBot\Core\Command;
-use saitho\TwitchBot\Core\Config;
+
+use saitho\TwitchBot\Core\Translator;
 
 /**
  * Class Uptime_Command
@@ -32,6 +33,7 @@ class Uptime extends Command {
 
 
     public function __construct() {
+    	parent::__construct();
         $this->__oStartDateTime = new \DateTime();
     }
 
@@ -50,10 +52,19 @@ class Uptime extends Command {
         $iHours   = $oDifference->format( '%H' );
         $iMinutes = $oDifference->format( '%I' );
 
-        $sResponse  = $iYears ? $iYears . ' ' . Config::getInstance()->lang( 'YEARS' ) . ', ' : '';
-        $sResponse .= $iDays  ? $iDays  . ' ' . Config::getInstance()->lang( 'DAYS' ) . ', ' : '';
-        $sResponse .= $iHours . ':' . $iMinutes . ' ' . Config::getInstance()->lang( 'HOURS' );
-
-        $this->setReturnMessage( $sResponse );
+        $aResponse = array();
+		if(!empty($iYears)) {
+			$aResponse[] = $iYears . ' ' . Translator::getInstance()->trans( 'YEARS' );
+		}
+		if(!empty($iDays)) {
+			$aResponse[] = $iDays . ' ' . Translator::getInstance()->trans( 'DAYS' );
+		}
+		if(!empty($iHours)) {
+			$aResponse[] = $iHours . ' ' . Translator::getInstance()->trans( 'HOURS' );
+		}
+		if(!empty($iMinutes)) {
+			$aResponse[] = $iMinutes . ' ' . Translator::getInstance()->trans( 'MINUTES' );
+		}
+        $this->setReturnMessage( implode(', ', $aResponse) );
     }
 }
