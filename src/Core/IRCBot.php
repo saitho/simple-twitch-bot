@@ -396,17 +396,17 @@ class IRCBot {
 		GeneralUtility::cliLog( $sPut, 'SENDING' );
         fputs( $this->getSocket(), $sPut . PHP_EOL );
     }
-
-
-    /**
-     * Sends a message to a channel.
-     *
-     * @param $sMessage
-     * @param $sChannel
-     */
-    public function sendMessage( $sMessage, $sChannel ) {
-        $this->sendData( 'PRIVMSG '.$sChannel.' :', $sMessage );
-    }
+	
+	
+	/**
+	 * Sends a message to a channel.
+	 *
+	 * @param $sMessage
+	 * @param $sChannel
+	 */
+	public function sendMessage( $sMessage, $sChannel ) {
+		$this->sendData( 'PRIVMSG '.$sChannel.' :', $sMessage );
+	}
 
 
     /**
@@ -427,18 +427,18 @@ class IRCBot {
     public function joinChannels( $mChannel ) {
         if ( is_array( $mChannel ) ) {
             foreach ( $mChannel as $sChannel ) {
-                $this->sendData( 'JOIN', $sChannel );
-
-                // ToDo: Check for welcome msg and send it
-                // $this->sendMessage( $sMessage, $sChannel );
+                $this->joinChannel($sChannel);
             }
-        }
-        else
-        {
-            $this->sendData( 'JOIN', $mChannel );
-
-            // ToDo: Check for welcome msg and send it
-            // $this->sendMessage( $sMessage, $sChannel );
+        } else {
+			$this->joinChannel($mChannel);
         }
     }
+    
+    private function joinChannel($sChannel) {
+		$this->sendData( 'JOIN', $sChannel );
+		$this->sendData( 'CAP REQ :twitch.tv/commands' );
+	
+		// ToDo: Check for welcome msg and send it
+		// $this->sendMessage( $sMessage, $sChannel );
+	}
 }
