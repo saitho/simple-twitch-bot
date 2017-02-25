@@ -10,6 +10,10 @@
                 <source>STEAM_ACHIEVEMENTS_UNLOCKED_LATEST</source>
                 <target>%unlocked%/%total% Achievements freigeschaltet, zuletzt: %latestName% am %latestDate%</target>
             </trans-unit>
+            <trans-unit id="STEAM_PLAYTIME">
+                <source>STEAM_PLAYTIME</source>
+                <target>Gesamtspielzeit: %timeTotalHours% Stunden, %timeTotalMinutes% Minuten</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
