@@ -41,21 +41,29 @@ class Config {
         }
         return self::$__instance;
     }
-
-
-    /**
-     * Returns config value
-     *
-     * @param $sKey
-     *
-     * @return mixed
-     */
-    public function get( $sKey ) {
-    	if(!array_key_exists($sKey, $this->__aConfig)) {
-    		return null;
+	
+	
+	/**
+	 * @param $sKey
+	 * @return bool
+	 */
+	public function hasKey( $sKey ) {
+		return array_key_exists($sKey, $this->__aConfig);
+	}
+	
+	/**
+	 * Returns config value
+	 *
+	 * @param $sKey
+	 *
+	 * @return mixed
+	 */
+	public function get( $sKey ) {
+		if(!$this->hasKey($sKey)) {
+			return null;
 		}
-        return $this->__aConfig[ $sKey ];
-    }
+		return $this->__aConfig[ $sKey ];
+	}
 
     /**
      * Helper function to check if a nick has mod status.

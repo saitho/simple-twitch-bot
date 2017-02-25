@@ -22,8 +22,7 @@ class Translator {
      */
 	static public function getInstance() {
 		if(empty(self::$translator)) {
-			$aConfig = Config::getInstance();
-			$sLanguage   = $aConfig[ 'app.language' ];
+			$sLanguage = Config::getInstance()->get('app.language');
 			self::$translator = new \Symfony\Component\Translation\Translator($sLanguage);
 			self::$translator->addLoader('xlf', new XliffFileLoader());
 			$translationFiles = glob( BASE_PATH.'config/locale/*.xlf' );

@@ -39,10 +39,8 @@ class Commander {
 			if($dirName == '.' || $dirName == '..') {
 				continue;
 			}
-			if(
-				!array_key_exists('features.'.strtolower($dirName), $this->__aConfig) ||
-				$this->__aConfig[ 'features.'.strtolower($dirName) ] != 1
-			) {
+			$configValue = $this->__aConfig->get('features.'.strtolower($dirName));
+			if(empty($configValue) || $configValue != 1) {
 				continue;
 			}
 			$aLang = glob( $file->getPathName().'/locale/*.xlf' );
