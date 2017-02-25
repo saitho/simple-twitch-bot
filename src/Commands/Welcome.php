@@ -1,4 +1,8 @@
 <?php
+namespace saitho\TwitchBot\Commands;
+use saitho\TwitchBot\Core\Command;
+use saitho\TwitchBot\Core\Config;
+
 /**
  * @link        https://github.com/Crease29/simple-twitch-bot
  * @author      Kai Neuwerth <github.com/Crease29>
@@ -12,7 +16,7 @@
  * !welcome
  * !welcome <nick>
  */
-class Welcome_Command extends Command {
+class Welcome extends Command {
 	protected $_commandName = 'welcome';
 	protected $_arguments = [
 		'arg1' => [

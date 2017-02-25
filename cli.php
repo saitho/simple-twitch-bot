@@ -4,15 +4,13 @@
  * @author      Kai Neuwerth <github.com/Crease29>
  */
 
-require_once dirname(__FILE__) . '/core/GeneralUtility.php';
-require_once BASE_PATH . 'core/Config.php';
-require_once BASE_PATH . 'core/DB.php';
-require_once BASE_PATH . 'core/IRCBot.php';
+require_once 'vendor/autoload.php';
+define('BASE_PATH', realpath( dirname( __FILE__ ) . '/' ) . '/');
 
 echo PHP_EOL;
 
-$oConfig = Config::getInstance();
-$oIRCBot = new IRCBot(
+$oConfig = \saitho\TwitchBot\Core\Config::getInstance();
+$oIRCBot = new \saitho\TwitchBot\Core\IRCBot(
 	$oConfig->get( 'irc.server' ),
 	$oConfig->get( 'irc.port' ),
 	$oConfig->get( 'irc.nick' ),

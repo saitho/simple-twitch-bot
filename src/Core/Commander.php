@@ -1,4 +1,5 @@
 <?php
+namespace saitho\TwitchBot\Core;
 /**
  * @link        https://github.com/Crease29/simple-twitch-bot
  * @author      Kai Neuwerth <github.com/Crease29>
@@ -31,9 +32,9 @@ class Commander {
      * Sets up all commands that are available.
      */
     protected function _setupCommands() {
-        require_once BASE_PATH . 'core/Command.php';
+        require_once 'Command.php';
 
-        $aCommands = glob( BASE_PATH . 'commands/*_Command.php' );
+        $aCommands = glob( 'Commands/*.php' );
 
         // Adding dynamic commands
         foreach ( $aCommands as $sCommandClass ) {

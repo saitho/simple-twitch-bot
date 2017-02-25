@@ -1,4 +1,8 @@
 <?php
+namespace saitho\TwitchBot\Commands;
+use saitho\TwitchBot\Core\Command;
+use saitho\TwitchBot\Core\Config;
+
 /**
  * @link        https://github.com/Crease29/simple-twitch-bot
  * @author      Kai Neuwerth <github.com/Crease29>
@@ -12,18 +16,18 @@
  * Usage:
  * !uptime
  */
-class Uptime_Command extends Command {
+class Uptime extends Command {
 	protected $_commandName = 'uptime';
 
 
     /**
-     * @var DateTime
+     * @var \DateTime
      */
     private $__oStartDateTime = null;
 
 
     public function __construct() {
-        $this->__oStartDateTime = new DateTime();
+        $this->__oStartDateTime = new \DateTime();
     }
 
 
@@ -33,7 +37,7 @@ class Uptime_Command extends Command {
     public function doExecute() {
         parent::doExecute();
 
-        $oNow = new DateTime();
+        $oNow = new \DateTime();
         $oDifference = $this->__oStartDateTime->diff( $oNow );
 
         $iYears   = $oDifference->format( '%y' );

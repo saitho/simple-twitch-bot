@@ -1,11 +1,11 @@
 <?php
+namespace saitho\TwitchBot\Core;
 /**
  * @link        https://github.com/Crease29/simple-twitch-bot
  * @author      Kai Neuwerth <github.com/Crease29>
  */
 
-class IRCBot
-{
+class IRCBot {
     const SYSTEM_RELOAD   = 1;
     const SYSTEM_SHUTDOWN = 2;
 
@@ -276,7 +276,7 @@ class IRCBot
      * Initializes the bot's functions.
      */
     protected function _init() {
-        require_once BASE_PATH . 'core/Commander.php';
+        require_once 'Commander.php';
         $this->setCommander( new Commander() );
 	
 		GeneralUtility::cliLog( 'Opening socket...', 'SETUP' );

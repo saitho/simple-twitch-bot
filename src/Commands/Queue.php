@@ -1,4 +1,9 @@
 <?php
+namespace saitho\TwitchBot\Commands;
+use saitho\TwitchBot\Core\Command;
+use saitho\TwitchBot\Core\Config;
+use saitho\TwitchBot\Core\GeneralUtility;
+
 /**
  * @link        https://github.com/Crease29/simple-twitch-bot
  * @author      Kai Neuwerth <github.com/Crease29>
@@ -15,7 +20,7 @@
  * !queue list
  * !queue clear
  */
-class Queue_Command extends Command {
+class Queue extends Command {
 	protected $_commandName = 'queue';
 	protected $_arguments = [
 		'arg1' => [

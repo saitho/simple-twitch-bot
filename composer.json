@@ -1,0 +1,18 @@
+{
+    "name": "saitho/simple-twitch-bot",
+    "type": "project",
+    "require": {
+        "twig/twig": "^2.1",
+        "symfony/console": "^3.2",
+        "symfony/translation": "^3.2"
+    },
+    "autoload": {
+        "psr-4": {"saitho\\TwitchBot\\": "src/"}
+    },
+    "authors": [
+        {
+            "name": "Mario Lubenka",
+            "email": "mario.lubenka@googlemail.com"
+        }
+    ]
+}

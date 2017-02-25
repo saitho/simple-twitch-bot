@@ -1,4 +1,5 @@
 <?php
+namespace saitho\TwitchBot\Core;
 /**
  * @link        https://github.com/Crease29/simple-twitch-bot
  * @author      Kai Neuwerth <github.com/Crease29>
