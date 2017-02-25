@@ -2,3 +2,5 @@
 /config/config.ini
 /config/static_commands.ini
 /vendor/
+cli.log
+composer.lock
