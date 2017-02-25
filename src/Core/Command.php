@@ -14,7 +14,6 @@ namespace saitho\TwitchBot\Core;
 class Command {
 	/** @var Config $config */
 	protected $config = null;
-	protected $_commandPrefix = '!';
 	protected $_commandName = '';
 	
     /**
@@ -90,7 +89,7 @@ class Command {
 	 * @throws \Exception
      */
     public function getCommandPattern() {
-		$pattern = $this->_commandPrefix.$this->_commandName;
+		$pattern = COMMAND_PREFIX.$this->_commandName;
     	if(!empty($this->_arguments)) {
 			foreach($this->_arguments AS $argName => $arg) {
 				if(!array_key_exists('regex', $arg)) {
@@ -112,7 +111,7 @@ class Command {
      * @return string
      */
     public function getReadableCommandPattern() {
-        return $this->_commandPrefix.$this->_commandName;
+        return COMMAND_PREFIX.$this->_commandName;
     }
 
 

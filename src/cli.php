@@ -16,6 +16,8 @@ echo PHP_EOL;
 
 $oConfig = \saitho\TwitchBot\Core\Config::getInstance();
 
+define('COMMAND_PREFIX', $oConfig->get('app.commandPrefix'));
+
 $oIRCBot = new \saitho\TwitchBot\Core\IRCBot(
 	$oConfig->get( 'irc.server' ),
 	$oConfig->get( 'irc.port' ),

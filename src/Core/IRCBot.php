@@ -345,10 +345,10 @@ class IRCBot {
 
             if( $oConfig->isMod( $sFrom ) ) {
                 switch ( $sCommand ) { //List of commands the bot responds to from a user.
-                    case '!reload':
+                    case COMMAND_PREFIX.'reload':
                         return IRCBot::SYSTEM_RELOAD;
                         break;
-                    case '!shutdown':
+                    case COMMAND_PREFIX.'shutdown':
                         $this->sendData( 'PRIVMSG '.$sChannel.' :', Translator::getInstance()->trans( 'QUIT_MSG' ) );
                         $this->sendData( 'QUIT', Translator::getInstance()->trans( 'QUIT_MSG' ) );
                         return IRCBot::SYSTEM_SHUTDOWN;
@@ -361,7 +361,7 @@ class IRCBot {
             if( !empty( $sResponseMessage ) ) {
                 $this->sendMessage( $sResponseMessage, $sChannel );
             } else {
-                if( substr( $sCommand, 0, 1 ) == '!' ) {
+                if( substr( $sCommand, 0, 1 ) == COMMAND_PREFIX) {
                     $sCommand = substr( $sCommand, 1 );
                     if( isset( $this->__aStaticMessages[ $sCommand ] ) ) {
                         $this->sendMessage( sprintf( $this->__aStaticMessages[ $sCommand ], $sFrom ), $sChannel );
@@ -436,9 +436,9 @@ class IRCBot {
     
     private function joinChannel($sChannel) {
 		$this->sendData( 'JOIN', $sChannel );
+		// allows whispering the bot
 		$this->sendData( 'CAP REQ :twitch.tv/commands' );
-	
-		// ToDo: Check for welcome msg and send it
-		// $this->sendMessage( $sMessage, $sChannel );
+		// access to user list (join, leave)
+		$this->sendData( 'CAP REQ :twitch.tv/membership' );
 	}
 }
