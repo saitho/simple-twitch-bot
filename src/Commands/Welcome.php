@@ -39,13 +39,13 @@ class Welcome extends Command {
         parent::doExecute();
 
         $sToBeGreeted = $this->getSender();
-        $aArgs        = $this->getParameters();
+        $firstParam = $this->getParameter(1);
 
         // Checking if there is a name given that shall be greeted
-        if( isset( $aArgs[ 1 ][ 0 ] ) && !empty( $aArgs[ 1 ][ 0 ] ) ) {
-            $sToBeGreeted = $aArgs[ 1 ][ 0 ];
+        if(!empty($firstParam)) {
+            $sToBeGreeted = $firstParam;
         }
 
-        $this->setReturnMessage( Translator::getInstance()->trans( 'WELCOME', $sToBeGreeted ) );
+        $this->setReturnMessage( Translator::getInstance()->trans( 'WELCOME', ['%name%' => $sToBeGreeted] ) );
     }
 }

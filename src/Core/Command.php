@@ -186,18 +186,28 @@ class Command {
         $sMessage = trim( $sMessage );
         return boolval(preg_match( $this->getCommandPattern(), $sMessage ));
     }
-
-
-    /**
-     * Get parameters given in a command
-     *
-     * @return array
-     */
-    public function getParameters() {
-        $iMatches = preg_match_all( $this->getCommandPattern(), $this->getReceivedMessage(), $aMatches );
-
-        return $iMatches > 0 ? $aMatches : array();
-    }
+	
+	
+	/**
+	 * Get parameters given in a command
+	 *
+	 * @return array
+	 */
+	public function getParameters() {
+		$iMatches = preg_match_all( $this->getCommandPattern(), $this->getReceivedMessage(), $aMatches );
+		
+		return $iMatches > 0 ? $aMatches : array();
+	}
+	/**
+	 * Get a certain parameter
+	 *
+	 * @param $i
+	 * @return array
+	 */
+	public function getParameter($i) {
+		$parameters = $this->getParameters();
+		return $parameters[$i][0];
+	}
 
 
     public function execute( $sMessage, $sFrom ) {

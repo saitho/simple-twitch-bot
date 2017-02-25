@@ -97,7 +97,9 @@ class Queue extends Command {
 			$iPos = count( $this->__aNicks );
 		}
 		
-		$this->setReturnMessage( Translator::getInstance()->trans( 'QUEUE_ADDED', array( $sSender, $iPos ) ) );
+		$this->setReturnMessage(
+			Translator::getInstance()->trans('QUEUE_ADDED', array( '%sender%' => $sSender, '%pos%' => $iPos ) )
+		);
 	}
 	
 	

@@ -20,7 +20,7 @@
             </trans-unit>
             <trans-unit id="WELCOME">
                 <source>WELCOME</source>
-                <target>Hallo @%s! Schön, dass du dabei bist!</target>
+                <target>Hallo %name%! Schön, dass du dabei bist!</target>
             </trans-unit>
             <trans-unit id="QUIT_MSG">
                 <source>QUIT_MSG</source>
@@ -37,7 +37,7 @@
             </trans-unit>
             <trans-unit id="QUEUE_ADDED">
                 <source>QUEUE_ADDED</source>
-                <target>@%s du hast dich erfolgreich in die Warteschlange eingetragen und bist aktuell auf Platz #%d.</target>
+                <target>%sender% du hast dich erfolgreich in die Warteschlange eingetragen und bist aktuell auf Platz #%pos%.</target>
             </trans-unit>
             <trans-unit id="QUEUE_PICKED">
                 <source>QUEUE_PICKED</source>

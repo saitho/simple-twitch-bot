@@ -20,7 +20,7 @@
             </trans-unit>
             <trans-unit id="WELCOME">
                 <source>WELCOME</source>
-                <target>Hi @%s! I'm glad you're here!</target>
+                <target>Hi %name%! I'm glad you're here!</target>
             </trans-unit>
             <trans-unit id="QUIT_MSG">
                 <source>QUIT_MSG</source>
