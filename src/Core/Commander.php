@@ -64,9 +64,18 @@ class Commander {
 			if($dirName == '.' || $dirName == '..') {
 				continue;
 			}
-			if($this->__aConfig[ 'features.'.strtolower($dirName) ] != 1) {
+			if(
+				!array_key_exists('features.'.strtolower($dirName), $this->__aConfig) ||
+				$this->__aConfig[ 'features.'.strtolower($dirName) ] != 1
+			) {
 				continue;
 			}
+			$aLang = glob( $file->getPathName().'/locale/*.xlf' );
+			foreach($aLang AS $item) {
+				preg_match('/\/locale\/(.*)\.xlf$/', $item, $result);
+				Translator::getInstance()->addResource('xlf', $item, $result[1]);
+			}
+			
 			$aCommands = glob( $file->getPathName().'/Commands/*.php' );
 			foreach ( $aCommands as $sCommandClass ) {
 				$sClassName = basename( $sCommandClass, '.php' );
