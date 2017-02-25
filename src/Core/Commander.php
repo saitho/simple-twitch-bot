@@ -12,53 +12,69 @@
 namespace saitho\TwitchBot\Core;
 
 class Commander {
-    /**
-     * @var array
-     */
+    /** @var array */
     private $__aStaticCommands = array();
 
-    /**
-     * @var array
-     */
+    /** @var array */
     private $__aCommands = array();
+	/** @var array */
+    private $__aConfig = array();
 
-    /**
-     * @var array
-     */
+    /** @var array */
     private $__aReadableCommands = array();
 
-
     public function __construct() {
+		$this->__aConfig = GeneralUtility::getConfig();
         GeneralUtility::cliLog( 'Setting up the Commander', 'SETUP' );
         $this->_setupCommands();
+        $this->_setupFeatures();
     }
-
-
-    /**
-     * Sets up all commands that are available.
-     */
-    protected function _setupCommands() {
-        require_once 'Command.php';
-
-        $aCommands = glob( 'Commands/*.php' );
-
-        // Adding dynamic commands
-        foreach ( $aCommands as $sCommandClass ) {
-            $sClassName = basename( $sCommandClass, '.php' );
-
-            $this->addCommand( $sClassName );
-        }
-
-        // Adding static commands
-        $this->__aStaticCommands = parse_ini_file( BASE_PATH . 'config/static_commands.ini' );
-        if( count( $this->__aStaticCommands ) ) {
-            foreach ( $this->__aStaticCommands as $sCommand => $sMessage ) {
-                $this->__aReadableCommands[] = '!' . $sCommand;
-            }
-        }
 	
+	
+	/**
+	 * Sets up all commands that are available.
+	 */
+	protected function _setupCommands() {
+		$aCommands = glob( 'Commands/*.php' );
+		
+		// Adding dynamic commands
+		foreach ( $aCommands as $sCommandClass ) {
+			$sClassName = basename( $sCommandClass, '.php' );
+			$this->addCommand( $sClassName );
+		}
+		
+		// Adding static commands
+		$this->__aStaticCommands = parse_ini_file( BASE_PATH . 'config/static_commands.ini' );
+		if( count( $this->__aStaticCommands ) ) {
+			foreach ( $this->__aStaticCommands as $sCommand => $sMessage ) {
+				$this->__aReadableCommands[] = '!' . $sCommand;
+			}
+		}
+		
 		GeneralUtility::cliLog( 'Available commands: ' . implode( ', ', $this->__aReadableCommands ), 'SETUP' );
-    }
+	}
+	
+	/**
+	 * Sets up all commands that are available.
+	 */
+	protected function _setupFeatures() {
+		$di = new \DirectoryIterator(BASE_PATH.'src/Features/');
+		foreach (new \IteratorIterator($di) as $filename => $file) {
+			$dirName = $file->getFileName();
+			if($dirName == '.' || $dirName == '..') {
+				continue;
+			}
+			if($this->__aConfig[ 'features.'.strtolower($dirName) ] != 1) {
+				continue;
+			}
+			$aCommands = glob( $file->getPathName().'/Commands/*.php' );
+			foreach ( $aCommands as $sCommandClass ) {
+				$sClassName = basename( $sCommandClass, '.php' );
+				$this->addCommand( 'saitho\\TwitchBot\\Features\\'.$dirName.'\\Commands\\'.$sClassName );
+			}
+		}
+		GeneralUtility::cliLog( 'Available commands: ' . implode( ', ', $this->__aReadableCommands ), 'SETUP' );
+	}
 
 
     /**
