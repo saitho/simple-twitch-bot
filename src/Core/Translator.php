@@ -22,7 +22,7 @@ class Translator {
      */
 	static public function getInstance() {
 		if(empty(self::$translator)) {
-			$aConfig = GeneralUtility::getConfig();
+			$aConfig = Config::getInstance();
 			$sLanguage   = $aConfig[ 'app.language' ];
 			self::$translator = new \Symfony\Component\Translation\Translator($sLanguage);
 			self::$translator->addLoader('xlf', new XliffFileLoader());
@@ -33,7 +33,7 @@ class Translator {
 			}
 		}
 		
-		GeneralUtility::cliLog( 'Translations loaded from config/locale/', 'SETUP' );
+		Logger::cliLog( 'Translations loaded from config/locale/', 'SETUP' );
 		return self::$translator;
     }
 }

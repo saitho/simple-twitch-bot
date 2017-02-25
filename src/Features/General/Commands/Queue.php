@@ -12,7 +12,7 @@
 namespace saitho\TwitchBot\Commands;
 use saitho\TwitchBot\Core\Command;
 
-use saitho\TwitchBot\Core\GeneralUtility;
+use saitho\TwitchBot\Core\Logger;
 use saitho\TwitchBot\Core\Translator;
 
 /**
@@ -91,7 +91,7 @@ class Queue extends Command {
 		$iPos = $this->__isInQueue( $sSender );
 		
 		if ( $iPos === 0 ) {
-			GeneralUtility::cliLog( "Adding {$sSender} ({$sGameNick}) to the queue.", 'QUEUE' );
+			Logger::cliLog( "Adding {$sSender} ({$sGameNick}) to the queue.", 'QUEUE' );
 			$this->__aNicks[] = array( 'twitch_nick' => $sSender, 'game_nick' => $sGameNick );
 			
 			$iPos = count( $this->__aNicks );
@@ -131,7 +131,7 @@ class Queue extends Command {
 	 */
 	private function getFromQueue( $iAmount ) {
 		if ( $this->config->isMod( $this->getSender() ) && count( $this->__aNicks ) && $iAmount > 0 ) {
-			GeneralUtility::cliLog( "Fetching {$iAmount} from the queue.", 'QUEUE' );
+			Logger::cliLog( "Fetching {$iAmount} from the queue.", 'QUEUE' );
 			
 			$aPicked = array_slice( $this->__aNicks, 0, $iAmount );
 			$sPicked = '';
@@ -145,7 +145,7 @@ class Queue extends Command {
 			}
 			
 			if ( !empty( $sPicked ) ) {
-				GeneralUtility::cliLog( "Picked from queue: " . substr( $sPicked, 0, -2 ), 'QUEUE' );
+				Logger::cliLog( "Picked from queue: " . substr( $sPicked, 0, -2 ), 'QUEUE' );
 				$this->setReturnMessage( Translator::getInstance()->trans( 'QUEUE_PICKED' ) . ' ' . substr( $sPicked, 0, -2 ) );
 			}
 		}
@@ -161,7 +161,7 @@ class Queue extends Command {
 		$iPos = $this->__isInQueue( $sNick );
 		
 		if ( $iPos !== 0 ) {
-			GeneralUtility::cliLog( "Removed {$sNick} from the queue.", 'QUEUE' );
+			Logger::cliLog( "Removed {$sNick} from the queue.", 'QUEUE' );
 			unset( $this->__aNicks[ ( $iPos - 1 ) ] );
 		}
 	}
@@ -179,10 +179,10 @@ class Queue extends Command {
 		}
 		
 		if ( !empty( $sNicks ) ) {
-			GeneralUtility::cliLog( "Current queue: " . substr( $sNicks, 0, -2 ), 'QUEUE' );
+			Logger::cliLog( "Current queue: " . substr( $sNicks, 0, -2 ), 'QUEUE' );
 			$this->setReturnMessage( Translator::getInstance()->trans( 'QUEUE_LIST' ) . ' ' . substr( $sNicks, 0, -2 ) );
 		} else {
-			GeneralUtility::cliLog( "Queue is empty.", 'QUEUE' );
+			Logger::cliLog( "Queue is empty.", 'QUEUE' );
 			$this->setReturnMessage( Translator::getInstance()->trans( 'QUEUE_EMPTY' ) );
 		}
 	}
@@ -193,7 +193,7 @@ class Queue extends Command {
 	 */
 	private function clearQueue() {
 		if ( $this->config->isMod( $this->getSender() ) ) {
-			GeneralUtility::cliLog( "Queue cleared.", 'QUEUE' );
+			Logger::cliLog( "Queue cleared.", 'QUEUE' );
 			
 			$this->__aNicks = array();
 			$this->setReturnMessage( Translator::getInstance()->trans( 'QUEUE_CLEARED' ) );

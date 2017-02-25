@@ -11,7 +11,7 @@
 
 namespace saitho\TwitchBot\Features\Steam\Commands;
 use saitho\TwitchBot\Core\Command;
-use saitho\TwitchBot\Core\GeneralUtility;
+use saitho\TwitchBot\Core\Logger;
 use saitho\TwitchBot\Core\Translator;
 use saitho\TwitchBot\Core\Twitch;
 use saitho\TwitchBot\Features\Steam\Helper\AbstractAPI;
@@ -29,12 +29,12 @@ class Achievements extends Command {
     public function doExecute() {
     	$game = Twitch::getPlayedGame();
     	if(empty($game)) {
-			GeneralUtility::cliLog( 'No game found: executing !'.$this->_commandName.' aborted. Stream offline?', 'COMMANDER' );
+			Logger::cliLog( 'No game found: executing !'.$this->_commandName.' aborted. Stream offline?', 'COMMANDER' );
     		return;
 		}
     	
 		/** @var AbstractAPI $api */
-		$config = Config::getConfig();
+		$config = Config::getFeatureConfig();
 		
 		$api = new \saitho\TwitchBot\Features\Steam\Helper\Achievements($config['games']);
 	

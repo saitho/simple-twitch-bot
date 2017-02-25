@@ -223,15 +223,15 @@ class IRCBot {
      * @param string $sOAuth
      */
     public function __construct( $sServer, $iPort = 6667, $sNick, $aChannels, $sOAuth ) {
-		GeneralUtility::cliLog( 'Setting server: '.$sServer, 'SETUP' );
+		Logger::cliLog( 'Setting server: '.$sServer, 'SETUP' );
         $this->setServer( $sServer );
-		GeneralUtility::cliLog( 'Setting port: '.$iPort, 'SETUP' );
+		Logger::cliLog( 'Setting port: '.$iPort, 'SETUP' );
         $this->setPort( $iPort );
-		GeneralUtility::cliLog( 'Setting nickname: '.$sNick, 'SETUP' );
+		Logger::cliLog( 'Setting nickname: '.$sNick, 'SETUP' );
         $this->setNick( $sNick );
-		GeneralUtility::cliLog( 'Setting channel: ' . implode( ', ', $aChannels ), 'SETUP' );
+		Logger::cliLog( 'Setting channel: ' . implode( ', ', $aChannels ), 'SETUP' );
         $this->setChannels( $aChannels );
-		GeneralUtility::cliLog( 'Setting oauth: '.$sOAuth, 'SETUP' );
+		Logger::cliLog( 'Setting oauth: '.$sOAuth, 'SETUP' );
         $this->setOAuth( $sOAuth );
 
         $this->_init();
@@ -243,12 +243,12 @@ class IRCBot {
             $aStatus = socket_get_status( $this->getSocket() );
 
             if( $aStatus[ 'timed_out' ] ) {
-				GeneralUtility::cliLog( 'Reloading after timeout...', 'SYSTEM' );
+				Logger::cliLog( 'Reloading after timeout...', 'SYSTEM' );
                 new self( $sServer, $iPort, $sNick, $aChannels, $sOAuth );
             }
 
             if( memory_get_usage( true ) / 1048576 > (double)$oConfig->get( 'app.mem_warning' ) ) {
-				GeneralUtility::cliLog( 'Current memory usage: ' . memory_get_usage( true ) / 1048576 . 'MB', 'WARNING' );
+				Logger::cliLog( 'Current memory usage: ' . memory_get_usage( true ) / 1048576 . 'MB', 'WARNING' );
             }
 
             $this->_getNewSocketContents();
@@ -261,12 +261,12 @@ class IRCBot {
                 if ( $iReturn ) {
                     switch ( $iReturn ) {
                         case IRCBot::SYSTEM_RELOAD:
-							GeneralUtility::cliLog( 'Reloading...', 'SYSTEM' );
+							Logger::cliLog( 'Reloading...', 'SYSTEM' );
                             new self( $sServer, $iPort, $sNick, $aChannels, $sOAuth );
                             break;
                             break;
                         case IRCBot::SYSTEM_SHUTDOWN:
-							GeneralUtility::cliLog( 'Shutting down...', 'SYSTEM' );
+							Logger::cliLog( 'Shutting down...', 'SYSTEM' );
                             exit;
                             break;
                     }
@@ -284,14 +284,14 @@ class IRCBot {
     protected function _init() {
         $this->setCommander( new Commander() );
 	
-		GeneralUtility::cliLog( 'Opening socket...', 'SETUP' );
+		Logger::cliLog( 'Opening socket...', 'SETUP' );
         $this->__fpSocket = fsockopen( $this->getServer(), $this->getPort() )
-		or GeneralUtility::cliLog( 'Unable to connect to '.$this->getServer().':'.$this->getPort(), 'CRITICAL' );
+		or Logger::cliLog( 'Unable to connect to '.$this->getServer().':'.$this->getPort(), 'CRITICAL' );
 	
-		GeneralUtility::cliLog( 'Logging in to server', 'SETUP' );
+		Logger::cliLog( 'Logging in to server', 'SETUP' );
         $this->login();
 	
-		GeneralUtility::cliLog( 'Joining channels: ' . implode( ', ', $this->getChannels() ), 'SETUP' );
+		Logger::cliLog( 'Joining channels: ' . implode( ', ', $this->getChannels() ), 'SETUP' );
         $this->joinChannels( $this->getChannels() );
     }
 
@@ -341,7 +341,7 @@ class IRCBot {
             unset( $this->__aNewMessages[ 0 ], $this->__aNewMessages[ 1 ], $this->__aNewMessages[ 2 ] );
             $sMessage = trim( implode( ' ', $this->__aNewMessages ) );
 	
-			GeneralUtility::cliLog( 'Message received from ' . $sFrom . ': ' . $sMessage, 'RECEIVED' );
+			Logger::cliLog( 'Message received from ' . $sFrom . ': ' . $sMessage, 'RECEIVED' );
 
             if( $oConfig->isMod( $sFrom ) ) {
                 switch ( $sCommand ) { //List of commands the bot responds to from a user.
@@ -393,7 +393,7 @@ class IRCBot {
             $sPut .= ' ' . $sMessage;
         }
 	
-		GeneralUtility::cliLog( $sPut, 'SENDING' );
+		Logger::cliLog( $sPut, 'SENDING' );
         fputs( $this->getSocket(), $sPut . PHP_EOL );
     }
 	

@@ -228,7 +228,7 @@ class Command {
      * @return void
      */
     public function onBeforeExecute() {
-		GeneralUtility::cliLog( 'Trigger ' . __METHOD__, 'COMMANDER' );
+		Logger::cliLog( 'Trigger ' . __METHOD__, 'COMMANDER' );
     }
 
 
@@ -238,7 +238,7 @@ class Command {
      * @return void
      */
     public function doExecute() {
-		GeneralUtility::cliLog( 'Executing command ' . __CLASS__, 'COMMANDER' );
+		Logger::cliLog( 'Executing command ' . __CLASS__, 'COMMANDER' );
     }
 
 
@@ -248,6 +248,6 @@ class Command {
      * @return void
      */
     public function onAfterExecute() {
-		GeneralUtility::cliLog( 'Trigger ' . __METHOD__, 'COMMANDER' );
+		Logger::cliLog( 'Trigger ' . __METHOD__, 'COMMANDER' );
     }
 }

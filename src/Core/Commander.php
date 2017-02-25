@@ -24,8 +24,8 @@ class Commander {
     private $__aReadableCommands = array();
 
     public function __construct() {
-		$this->__aConfig = GeneralUtility::getConfig();
-        GeneralUtility::cliLog( 'Setting up the Commander', 'SETUP' );
+		$this->__aConfig = Config::getInstance();
+        Logger::cliLog( 'Setting up the Commander', 'SETUP' );
         $this->_setupFeatures();
     }
 		
@@ -57,7 +57,7 @@ class Commander {
 				$this->addCommand( 'saitho\\TwitchBot\\Features\\'.$dirName.'\\Commands\\'.$sClassName );
 			}
 		}
-		GeneralUtility::cliLog( 'Available commands: ' . implode( ', ', $this->__aReadableCommands ), 'SETUP' );
+		Logger::cliLog( 'Available commands: ' . implode( ', ', $this->__aReadableCommands ), 'SETUP' );
 	}
 
 
@@ -122,7 +122,7 @@ class Commander {
      */
     public function addCommand( $sCommandName ) {
         if( class_exists( $sCommandName ) ) {
-			GeneralUtility::cliLog( 'Adding command: '.$sCommandName, 'SETUP' );
+			Logger::cliLog( 'Adding command: '.$sCommandName, 'SETUP' );
 
             /** @var Command $oCommand */
             $oCommand = new $sCommandName;
@@ -156,14 +156,14 @@ class Commander {
 		$command = substr($aMessage[0], 1);
 		
         if( is_array( $aMessage ) && in_array( $command, array_keys( $this->getStaticCommands() ) ) ) {
-			GeneralUtility::cliLog( 'Static command found: !' . $command, 'COMMANDER' );
+			Logger::cliLog( 'Static command found: !' . $command, 'COMMANDER' );
             $sReturn = sprintf( $this->getStaticCommand($command), '@'.$sFrom );
         }
 
         // Checking for dynamic command
         foreach ( $this->getCommands() as $aCommand ) {
             if( preg_match( $aCommand[ 'sPattern' ], $sMessage ) ) {
-				GeneralUtility::cliLog( 'Command found: ' . $aCommand[ 'sReadablePattern' ], 'COMMANDER' );
+				Logger::cliLog( 'Command found: ' . $aCommand[ 'sReadablePattern' ], 'COMMANDER' );
 
 				/** @var Command $oCommand */
 				$oCommand = $aCommand[ 'oCommand' ];
