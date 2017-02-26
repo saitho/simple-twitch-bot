@@ -244,6 +244,7 @@ class IRCBot {
 
             if( $aStatus[ 'timed_out' ] ) {
 				Logger::cliLog( 'Reloading after timeout...', 'SYSTEM' );
+				ViewerManager::clear();
                 new self( $sServer, $iPort, $sNick, $aChannels, $sOAuth );
             }
 
@@ -261,11 +262,13 @@ class IRCBot {
                 if ( $iReturn ) {
                     switch ( $iReturn ) {
                         case IRCBot::SYSTEM_RELOAD:
+							ViewerManager::clear();
 							Logger::cliLog( 'Reloading...', 'SYSTEM' );
                             new self( $sServer, $iPort, $sNick, $aChannels, $sOAuth );
                             break;
                             break;
                         case IRCBot::SYSTEM_SHUTDOWN:
+							ViewerManager::clear();
 							Logger::cliLog( 'Shutting down...', 'SYSTEM' );
                             exit;
                             break;
@@ -287,7 +290,8 @@ class IRCBot {
 		Logger::cliLog( 'Opening socket...', 'SETUP' );
         $this->__fpSocket = fsockopen( $this->getServer(), $this->getPort() )
 		or Logger::cliLog( 'Unable to connect to '.$this->getServer().':'.$this->getPort(), 'CRITICAL' );
-	
+		stream_set_timeout($this->__fpSocket, 360);
+        
 		Logger::cliLog( 'Logging in to server', 'SETUP' );
         $this->login();
 	
@@ -321,69 +325,77 @@ class IRCBot {
         }
     }
 
-
     /**
      * This is the workhorse function, grabs the data from the server and displays on the browser
      *
      * @return int
      */
     public function main() {
-        if ( $this->__aNewMessages[ 0 ] == 'PING' ) {
+        if ( $this->__aNewMessages[0] == 'PING' ) {
             $this->sendData( 'PONG', $this->__aNewMessages[ 1 ] ); //Plays ping-pong with the server to stay connected.
+			return 0;
         }
-
-        if ( isset( $this->__aNewMessages[ 3 ] ) ) {
-            $oConfig  = Config::getInstance();
-            $sFrom    = ucfirst( substr( $this->__aNewMessages[ 0 ], 1, ( strpos( $this->__aNewMessages[ 0 ], '!' ) - 1 ) ) );
-            $sChannel = $this->__aNewMessages[ 2 ];
-            $sCommand = $this->__aNewMessages[ 3 ] = substr( str_replace( array( chr( 10 ), chr( 13 ) ), '', $this->__aNewMessages[ 3 ] ), 1 );
-
-            unset( $this->__aNewMessages[ 0 ], $this->__aNewMessages[ 1 ], $this->__aNewMessages[ 2 ] );
-            $sMessage = trim( implode( ' ', $this->__aNewMessages ) );
-	
-			Logger::cliLog( 'Message received from ' . $sFrom . ': ' . $sMessage, 'RECEIVED' );
-
-            if( $oConfig->isMod( $sFrom ) ) {
-                switch ( $sCommand ) { //List of commands the bot responds to from a user.
-                    case COMMAND_PREFIX.'reload':
-                        return IRCBot::SYSTEM_RELOAD;
-                        break;
-                    case COMMAND_PREFIX.'shutdown':
-                        $this->sendData( 'PRIVMSG '.$sChannel.' :', Translator::getInstance()->trans( 'QUIT_MSG' ) );
-                        $this->sendData( 'QUIT', Translator::getInstance()->trans( 'QUIT_MSG' ) );
-                        return IRCBot::SYSTEM_SHUTDOWN;
-                        break;
-                }
-            }
-
-            $sResponseMessage = $this->getCommander()->processMessage( $sMessage, $sFrom );
-
-            if( !empty( $sResponseMessage ) ) {
-                $this->sendMessage( $sResponseMessage, $sChannel );
-            } else {
-                if( substr( $sCommand, 0, 1 ) == COMMAND_PREFIX) {
-					if(in_array(strtolower($sFrom), explode(',', Config::getInstance()->get('app.blacklist')))) {
-						$blacklistMessage = Translator::getInstance()->trans('BLACKLIST_MESSAGE');
-						if(!empty($blacklistMessage)) {
-							$this->sendMessage('/w '.$sFrom.' '.$blacklistMessage, $sChannel);
-						}
-						return 0;
-					}
+		preg_match('/^:(\w+)!/', $this->__aNewMessages[0], $matches);
+        if(empty($matches[1])) {
+        	return 0;
+		}
+		$sFrom = $matches[1];
+        
+        switch($this->__aNewMessages[1]) {
+			case 'JOIN':
+				ViewerManager::userJoins($sFrom);
+				break;
+			case 'PART':
+				ViewerManager::userLeaves($sFrom);
+				break;
+			case 'PRIVMSG':
+				$oConfig  = Config::getInstance();
+				$sChannel = $this->__aNewMessages[ 2 ];
+				if(empty($this->__aNewMessages[ 3 ])) {
+					break;
+				}
+				$this->__aNewMessages[3] = substr( str_replace( array( chr( 10 ), chr( 13 ) ), '', $this->__aNewMessages[3] ), 1 );
+				$sCommand = $this->__aNewMessages[3];
 					
-                    $sCommand = substr( $sCommand, 1 );
-                    if( isset( $this->__aStaticMessages[ $sCommand ] ) ) {
-                        $this->sendMessage( sprintf( $this->__aStaticMessages[ $sCommand ], $sFrom ), $sChannel );
-                    }
-                    elseif( $sCommand == 'help' || $sCommand == 'commands' ) {
-                        $this->sendMessage(
-							Translator::getInstance()->trans( 'AVAILABLE_COMMANDS' ) .
-							': ' . implode( ', ', $this->getCommander()->getReadableCommands() ),
-							$sChannel
-						);
-                    }
-                }
-            }
-        }
+				unset( $this->__aNewMessages[0], $this->__aNewMessages[1], $this->__aNewMessages[2]);
+				$sMessage = trim( implode( ' ', $this->__aNewMessages ) );
+				
+				Logger::cliLog( 'Message received from ' . $sFrom . ': ' . $sMessage, 'RECEIVED' );
+				
+				if( $oConfig->isMod( $sFrom ) ) {
+					switch ( $sCommand ) { //List of commands the bot responds to from a user.
+						case COMMAND_PREFIX.'reload':
+							return IRCBot::SYSTEM_RELOAD;
+							break;
+						case COMMAND_PREFIX.'shutdown':
+							$this->sendData( 'PRIVMSG '.$sChannel.' :', Translator::getInstance()->trans( 'QUIT_MSG' ) );
+							$this->sendData( 'QUIT', Translator::getInstance()->trans( 'QUIT_MSG' ) );
+							return IRCBot::SYSTEM_SHUTDOWN;
+							break;
+					}
+				}
+				
+				$sResponseMessage = $this->getCommander()->processMessage( $sMessage, $sFrom );
+				
+				if( !empty( $sResponseMessage ) ) {
+					$this->sendMessage( $sResponseMessage, $sChannel );
+				} else {
+					if( substr( $sCommand, 0, 1 ) == COMMAND_PREFIX) {
+						$sCommand = substr( $sCommand, 1 );
+						if( isset( $this->__aStaticMessages[ $sCommand ] ) ) {
+							$this->sendMessage( sprintf( $this->__aStaticMessages[ $sCommand ], $sFrom ), $sChannel );
+						}
+						elseif( $sCommand == 'help' || $sCommand == 'commands' ) {
+							$this->sendMessage(
+								Translator::getInstance()->trans( 'AVAILABLE_COMMANDS' ) .
+								': ' . implode( ', ', $this->getCommander()->getReadableCommands() ),
+								$sChannel
+							);
+						}
+					}
+				}
+				break;
+		}
         return 0;
     }
 

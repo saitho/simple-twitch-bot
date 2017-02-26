@@ -13,6 +13,7 @@ namespace saitho\TwitchBot\Core;
 
 class Logger {
 	static private $logFile;
+	static private $userLogFile;
 		
 	/**
 	 * Helper-Method for CLI logging.
@@ -33,5 +34,16 @@ class Logger {
 		if( $sType == 'CRITICAL' ) {
 			die( 'Exiting.'.PHP_EOL );
 		}
+	}
+	
+	static public function userLog( $sMessage, $sType ) {
+		if(empty(self::$userLogFile)) {
+			self::$userLogFile = BASE_PATH . 'logs/user_'.date('Y-m-d_H-i-s').'.log';
+		}
+		
+		$sLog = '[' . date( 'Y-m-d H:i:s' ) . '] [' . str_pad( $sType, 11, ' ', STR_PAD_BOTH ) . '] ' . $sMessage . PHP_EOL;
+		
+		echo $sLog;
+		file_put_contents( self::$userLogFile, $sLog, FILE_APPEND );
 	}
 }
