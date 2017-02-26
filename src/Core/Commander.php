@@ -49,6 +49,12 @@ class Commander {
 				Translator::getInstance()->addResource('xlf', $item, $result[1]);
 			}
 			
+			if(file_exists($file->getPathName().'/'.$dirName.'.php')) {
+				/** @var Feature $initClassName */
+				$initClassName = 'saitho\\TwitchBot\\Features\\'.$dirName.'\\'.$dirName;
+				$initClassName::init();
+			}
+			
 			$aCommands = glob( $file->getPathName().'/Commands/*.php' );
 			foreach ( $aCommands as $sCommandClass ) {
 				$sClassName = basename( $sCommandClass, '.php' );
@@ -148,6 +154,13 @@ class Commander {
      */
     public function processMessage( $sMessage, $sFrom ) {
         $sReturn = '';
+		if(in_array(strtolower($sFrom), explode(',', Config::getInstance()->get('app.blacklist')))) {
+			$blacklistMessage = Translator::getInstance()->trans('BLACKLIST_MESSAGE');
+			if(!empty($blacklistMessage)) {
+				return '/w '.$sFrom.' '.$blacklistMessage;
+			}
+			return 0;
+		}
 
         // Checking for static command
         $aMessage = explode( ' ', $sMessage );
