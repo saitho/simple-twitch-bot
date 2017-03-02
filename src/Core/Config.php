@@ -21,7 +21,14 @@ class Config {
      * @var array
      */
     private $__aConfig = array();
-
+	
+	static private $config = [];
+	static public function getFeatureConfig($featureName) {
+		if(!array_key_exists($featureName, self::$config)) {
+			self::$config[$featureName] = parse_ini_file(BASE_PATH.'src/Features/'.$featureName.'/config.ini', true);
+		}
+		return self::$config[$featureName];
+	}
 
     /**
      * Parses configs/config.ini file and saves it to an array

@@ -11,11 +11,11 @@
 
 namespace saitho\TwitchBot\Features\Steam\Commands;
 use saitho\TwitchBot\Core\Command;
+use saitho\TwitchBot\Core\Config;
 use saitho\TwitchBot\Core\Logger;
 use saitho\TwitchBot\Core\Translator;
 use saitho\TwitchBot\Core\Twitch;
 use saitho\TwitchBot\Features\Steam\Helper\AbstractAPI;
-use saitho\TwitchBot\Features\Steam\Helper\Config;
 
 class Achievements extends Command {
 	protected $_commandName = 'achievements';
@@ -34,7 +34,7 @@ class Achievements extends Command {
 		}
     	
 		/** @var AbstractAPI $api */
-		$config = Config::getFeatureConfig();
+		$config = Config::getFeatureConfig('Steam');
 		
 		$api = new \saitho\TwitchBot\Features\Steam\Helper\Achievements($config['games']);
 	
