@@ -1,5 +1,16 @@
 # Simple PHP Twitch.tv Bot
 
+
+## Installation Notes
+
+chmod a+x ./src/Features/Currency/bin/currency.php
+php ./src/Features/Currency/bin/currency.php
+
+----
+
+Section below from forked bot...
+
+
 I'm proud to present you my simply customizable and extensible Twitch.tv Bot.
 It's build as a boilerplate for your needs and just equipped with basic functions.
 
