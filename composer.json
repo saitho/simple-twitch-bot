@@ -3,7 +3,9 @@
     "type": "project",
     "require": {
         "symfony/translation": "^3.2",
-        "symfony/config": "^3.2"
+        "symfony/config": "^3.2",
+        "openbuildings/system_daemon": "1.0.0-RC1",
+        "pear/pear_exception": "^1.0"
     },
     "autoload": {
         "psr-4": {"saitho\\TwitchBot\\": "src/"}
