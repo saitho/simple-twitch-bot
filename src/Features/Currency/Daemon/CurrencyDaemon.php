@@ -40,7 +40,7 @@ class CurrencyDaemon extends Daemon {
 		$sContent = file_get_contents(sprintf(CurrencyDaemon::TWITCH_CHATTERS_URL, $channelName));
 		$aContent = json_decode($sContent);
 		\System_Daemon::info('{appName} running in %s (Run #%s)', $mode, $cnt);
-		if($cnt == 1) {
+		if($cnt == 1 && !$config['payout']['interval_pay_on_startup']) {
 			// first run
 			\System_Daemon::info('Skipping payout after initializing', $mode, $cnt);
 		}else{
@@ -49,7 +49,6 @@ class CurrencyDaemon extends Daemon {
 			}
 			$iViewers = count($aContent->chatters->viewers);
 			\System_Daemon::info('Paid out a total of '.$amount*$iViewers.' currency to '.$iViewers.' viewers. Next payout in '.$interval.' seconds.');
-			
 		}
 				
 		\System_Daemon::info('Next payout in '.$interval.' seconds.');
