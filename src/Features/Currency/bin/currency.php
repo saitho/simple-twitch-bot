@@ -9,8 +9,8 @@
  * @author      Mario Lubenka <github.com/saitho>
  * @link        https://github.com/saitho/simple-twitch-bot/
  */
-define('BASE_PATH', '../../../../');
-require_once BASE_PATH . 'vendor/autoload.php';
+define('BASE_PATH', realpath( dirname( __FILE__ ) . '/../../../../' ) . '/');
+require_once BASE_PATH.'vendor/autoload.php';
 
 /**
  * In panic situations, you can always kill you daemon by typing
@@ -20,6 +20,7 @@ require_once BASE_PATH . 'vendor/autoload.php';
  * killall -9 php§
  *
  * Check if process is running: ps uf -C currency.php
+ * All running processes: ps -aux
  *
  */
 $daemon = new \saitho\TwitchBot\Features\Currency\Daemon\CurrencyDaemon('twitchbot_currency');
