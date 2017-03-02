@@ -11,6 +11,7 @@
 
 namespace saitho\TwitchBot\Features\Currency\Commands;
 use saitho\TwitchBot\Core\Command;
+use saitho\TwitchBot\Core\Config;
 
 class Gold extends Command {
 	protected $_commandName = 'gold';
@@ -22,6 +23,12 @@ class Gold extends Command {
      * @return void
      */
     public function doExecute() {
-		$this->setReturnMessage( 'Not implemented yet.' );
+		$message = 'Not implemented yet.';
+	
+		$config = Config::getFeatureConfig('Currency');
+    	if($config['bot']['whisper_gold']) {
+			$message = '/w '.$this->_sSender.' '.$message;
+		}
+		$this->setReturnMessage($message);
     }
 }
