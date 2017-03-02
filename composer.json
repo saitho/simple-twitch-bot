@@ -1,11 +1,16 @@
 {
     "name": "saitho/simple-twitch-bot",
     "type": "project",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/saitho/system_daemon"
+        }
+    ],
     "require": {
         "symfony/translation": "^3.2",
         "symfony/config": "^3.2",
-        "openbuildings/system_daemon": "1.0.0-RC1",
-        "pear/pear_exception": "^1.0"
+        "saitho/system_daemon": "dev-master"
     },
     "autoload": {
         "psr-4": {"saitho\\TwitchBot\\": "src/"}
