@@ -26,6 +26,7 @@ abstract class Daemon {
 		}
 		global $argv;
 		$this->runmode = array(
+			'stop' => false,
 			'no-daemon' => false,
 			'help' => false,
 			'write-initd' => false,
@@ -42,6 +43,7 @@ abstract class Daemon {
 			'appName' => $this->appName,
 			'appDir' => dirname(__FILE__),
 			'appDescription' => $this->description,
+			'logLocation' => BASE_PATH.'logs/daemon_'.$this->appName.'.log',
 			'sysMaxExecutionTime' => 0,
 			'sysMaxInputTime' => 0,
 			'sysMemoryLimit' => '1024M',
@@ -70,6 +72,10 @@ abstract class Daemon {
 		
 		// Setup
 		\System_Daemon::setOptions($this->options);
+		if ($this->runmode['stop'] == true) {
+			\System_Daemon::stopRunning();
+			die();
+		}
 		
 		// This program can also be run in the forground with runmode --no-daemon
 		if (!$this->runmode['no-daemon']) {
@@ -107,7 +113,6 @@ abstract class Daemon {
 				break;
 			}
 		}
-		var_dump($cnt);
 		
 		// Shut down the daemon nicely
 		// This is ignored if the class is actually running in the foreground
