@@ -18,6 +18,11 @@ abstract class Daemon {
 	protected $appName = '';
 	protected $description = '';
 	
+	protected $commander = null;
+	public function setCommander(Commander $commander) {
+		$this->commander = $commander;
+	}
+	
 	private $runmode = [];
 	private $options = [];
 	public function __construct() {

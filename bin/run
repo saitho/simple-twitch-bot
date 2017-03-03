@@ -1,0 +1,31 @@
+#!/usr/bin/php -q
+<?php
+/**
+ * Simple Twitch Bot
+ * based on the work of Kai Neuwerth
+ * @author      Kai Neuwerth <github.com/Crease29>
+ *
+ * Copyright (C) 2017 by Mario Lubenka
+ * @author      Mario Lubenka <github.com/saitho>
+ * @link        https://github.com/saitho/simple-twitch-bot/
+ */
+define('CONTEXT', 'bot');
+require_once(realpath( dirname( __FILE__ ) . '/../' ).'/src/_init.php');
+
+$commander = new \saitho\TwitchBot\Core\Commander();
+
+$daemonClass = '\saitho\TwitchBot\Features\Currency\Daemon\CurrencyDaemon';
+if(!empty($argv[1])) {
+   $daemonClass = \saitho\TwitchBot\Core\DaemonManager::getDaemon($argv[1]);
+   if(empty($daemonClass)) {
+       throw new Exception('Missing daemon class for '.$argv[1]);
+   }elseif(!class_exists($daemonClass)) {
+	   throw new Exception('Class "'.$daemonClass.'" not found."');
+   }
+}
+
+/** @var \saitho\TwitchBot\Core\Daemon $daemon */
+$daemon = new $daemonClass();
+$daemon->setCommander($commander);
+$daemon->call();
+?>

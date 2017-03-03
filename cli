@@ -1,3 +1,0 @@
-#!/usr/bin/env php
-<?php
-include_once ('src/cli.php');

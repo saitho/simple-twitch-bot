@@ -38,24 +38,13 @@ class Installer {
 		fwrite($configFile, $configText);
 		fclose($configFile);
 	}
-	
-	private static function checkFeatureBinaries(IOInterface $io, $featureName) {
-		$binDir = BASE_PATH.'src/Features/'.ucfirst($featureName).'/bin/';
-		if(!is_dir($binDir)) {
-			return;
-		}
-		$binFiles = scandir($binDir);
-		foreach($binFiles AS $binFile) {
-			if($binFile == '.' || $binFile == '..') {
-				continue;
-			}
-			chmod($binDir.$binFile, 0770);
-		}
-	}
-	
+		
 	public static function install(Event $event) {
 		$io = $event->getIO();
 		$configFilePath = Config::$configDir.'config.ini';
+		
+		// make bin/cli executable
+		chmod(BASE_PATH.'bin/run', 0770);
 		
 		if(!file_exists($configFilePath)) {
 			// Create config file if it doesn't already exist
@@ -77,9 +66,6 @@ class Installer {
 					$io->write('Configuration for Feature "'.ucfirst($featureName).'"');
 					self::createConfigFromExample($io, $featureConfigPath, $exampleFeatureConfigPath);
 				}
-				
-				// Check bin folder permissions of Features
-				self::checkFeatureBinaries($io, $featureName);
 			}
 		}
 	}

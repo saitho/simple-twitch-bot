@@ -221,8 +221,9 @@ class IRCBot {
      * @param string $sNick
      * @param array  $aChannels
      * @param string $sOAuth
+	 * @param Commander $commander
      */
-    public function __construct( $sServer, $iPort = 6667, $sNick, $aChannels, $sOAuth ) {
+    public function __construct( $sServer, $iPort = 6667, $sNick, $aChannels, $sOAuth, Commander $commander) {
 		Logger::cliLog( 'Setting server: '.$sServer, 'SETUP' );
         $this->setServer( $sServer );
 		Logger::cliLog( 'Setting port: '.$iPort, 'SETUP' );
@@ -234,7 +235,7 @@ class IRCBot {
 		Logger::cliLog( 'Setting oauth: '.$sOAuth, 'SETUP' );
         $this->setOAuth( $sOAuth );
 
-        $this->_init();
+        $this->_init($commander);
 
         $oConfig = Config::getInstance();
 
@@ -284,8 +285,8 @@ class IRCBot {
     /**
      * Initializes the bot's functions.
      */
-    protected function _init() {
-        $this->setCommander( new Commander() );
+    protected function _init(Commander $commander) {
+        $this->setCommander($commander);
 	
 		Logger::cliLog( 'Opening socket...', 'SETUP' );
         $this->__fpSocket = fsockopen( $this->getServer(), $this->getPort() )

@@ -3,7 +3,11 @@
 
 ## Installation Notes
 
-php ./src/Features/Currency/bin/currency
+### Starting the Twitch Bot
+php bin/run
+
+### Starting additional daemons from Features
+e.g. php bin/run currency
 
 ----
 
@@ -20,6 +24,7 @@ Feel free to contribute! :)
 ## Requirements
 
 - PHP 5.2 with CLI access
+- PEAR
 - A Twitch.tv account
 - Connection to the internet (*lol*)
 

@@ -11,8 +11,10 @@
 
 namespace saitho\TwitchBot\Features\Currency;
 
+use saitho\TwitchBot\Core\DaemonManager;
 use saitho\TwitchBot\Core\Feature;
 use saitho\TwitchBot\Core\ViewerManager;
+use saitho\TwitchBot\Features\Currency\Daemon\CurrencyDaemon;
 
 class Currency extends Feature {
 	
@@ -22,5 +24,6 @@ class Currency extends Feature {
 	
 	static public function init() {
 		ViewerManager::registerHook(ViewerManager::ACTION_LEAVE, __CLASS__.'::userLeave');
+		DaemonManager::registerDaemon('currency', CurrencyDaemon::class);
 	}
 }
