@@ -45,13 +45,13 @@ class CurrencyDaemon extends Daemon {
 			\System_Daemon::info('Skipping payout after initializing', $mode, $cnt);
 		}else{
 			foreach($aContent->chatters->viewers AS $viewer) {
-				\System_Daemon::info('Giving '.$amount.' currency to '.$viewer.'.');
+				\System_Daemon::info('Giving %s currency to %s.', $amount, $viewer);
 			}
 			$iViewers = count($aContent->chatters->viewers);
-			\System_Daemon::info('Paid out a total of '.$amount*$iViewers.' currency to '.$iViewers.' viewers. Next payout in '.$interval.' seconds.');
+			\System_Daemon::info('Paid out a total of %s currency to %s viewers. Next payout in %s seconds.', $amount*$iViewers, $iViewers, $interval);
 		}
 				
-		\System_Daemon::info('Next payout in '.$interval.' seconds.');
+		\System_Daemon::info('Next payout in %s seconds.', $interval);
 		\System_Daemon::iterate($interval);
 		return Daemon::RETURN_SUCCESS;
 	}
