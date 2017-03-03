@@ -3,12 +3,6 @@
 
 ## Installation Notes
 
-### Starting the Twitch Bot
-php bin/run
-
-### Stopping the Twitch Bot
-php bin/run --stop
-
 ### Starting additional daemons from Features
 e.g. php bin/run currency
 
@@ -17,103 +11,119 @@ e.g. php bin/run currency --stop
 
 ----
 
-Section below from forked bot...
-
-
-I'm proud to present you my simply customizable and extensible Twitch.tv Bot.
-It's build as a boilerplate for your needs and just equipped with basic functions.
-
-If you have any questions, you can contact me via Skype: kai_neuwerth
-
-Feel free to contribute! :)
+This is based on Crease29's Twitch bot but it comes with a different structure.
 
 ## Requirements
 
 - PHP 5.2 with CLI access
 - PEAR
 - A Twitch.tv account
-- Connection to the internet (*lol*)
 
 
 ## Setup
 
 1. Download this repository
 2. Extract it to a lovely place where you can execute PHP
-3. Open ``config/config.ini`` in an editor and fill the values according to the config documentation below
-4. Open ``config/static_commands.ini`` in an editor and set some commands with static answers
-5. Run via command line: ``php cli.php`` or set it up in a screen session or as a daemon (Linux)
+3. Run ``php composer.phar install`` to install the dependencies and craete the initial configuration
+4. During the install you'll be able to configure the bot. Fill the values according to the config documentation below
+5. Start the bot daemon via: ``php bin/run``
+6. If you want to stop the daemon: ``php bin/run --stop``
 
+## Config values
 
-## Documentation
+### [irc]
 
-### IRC config values
-
-#### `irc.server` (Default: 192.16.64.174)
+#### `server` (Default: irc.chat.twitch.tv)
 
 List of available twitch chat servers: http://twitchstatus.com/ (Please choose one from Main Chat with ws_irc protocol)
 
-Example: "192.16.64.174"
+Example: "irc.chat.twitch.tv"
 
 
-#### `irc.port` (Default: 6667)
+#### `port` (Default: 6667)
 
 Port of IRC server.
 
 Example: 6667
 
+### [bot]
 
-#### `irc.nick`
+#### `nick`
 
 The twitch username of your bot.
 
 Example: "Nightbot"
 
-
-#### `irc.channels`
-
-Seperate multiples by comma without spaces! 
-
-Example: "#channel1,#channel2"
-
-
-#### `irc.oauth`
+#### `oauth`
 
 Get it from http://www.twitchapps.com/tmi/ 
 
 Example: "oauth:abcdefghi123456789"
 
+### [app]
 
-#### `app.language`
+#### `channelName`
+
+The name of the channel your bot shall connect to (lowercase!).
+
+Example: "saitholp"
+
+#### `clientId`
+
+clientId....
+
+Example: "...."
+
+#### `commandPrefix` (Default: !)
+
+Prefix of the commands the bot shall react to.
+
+Example: "!"
+
+#### `language` (Default: de)
 
 Defines which language should be used by Config 
 
-Example: "i18n_en"
+Example: "en"
 
 
-#### `app.mods`
+#### `mods`
 
-Seperate multiples by comma without spaces! 
+Seperate multiples by comma without spaces! (lowercase)
 
-Example: "User1,User2"
+Example: "user1,user2"
+
+#### `blacklist`
+
+Seperate multiples by comma without spaces (lowercase!) Example: user1,user2; users on this list can't use commands
+
+Example: "user1,user2"
 
 
-#### `app.mem_warning` (Default: 5)
+#### `mem_warning` (Default: 5)
 
 Defines how much RAM usage in MB is okay for the bot. If the RAM usage is higher than this config value there will be warnings in CLI.
 
 Example: 5
 
 
-#### `app.thread_interval` (Default: 0.2)
+#### `thread_interval` (Default: 0.2)
 
 Defines how long the loop of the main thread sleeps before looking for new messages (in seconds).
 
 Example: 0.2
 
+### [features]
 
-#### `features.coin_system` (Default: 0)
+#### `currency` (Default: 0)
 
-Not implemented yet :'(
+If set to 1 the currency feature is activated.
+
+Example: 1
+
+#### `steam` (Default: 0)
+
+If set to 1 the steam feature is activated.
 
 Example: 1
 
@@ -144,6 +154,13 @@ This is a static command that can also be removed in ``config/static_commands.in
 
 Sends all available commands in the chat.
 
+#### `!whoami`
+
+This is a static command with a placeholder that can also be removed in ``config/static_commands.ini``.
+
+## Features
+
+### General
 
 #### `!queue`
 
@@ -166,16 +183,18 @@ Available commands:
 - !welcome
 - !welcome <nick>
 
+#### ...
+...
 
-#### `!whoami`
+### Currency
+The currency feature comes with an own daemon that watches the viewers and awards currency.
+This daemon has to be started manually (at the moment) via: ``php bin/run currency`` (add ``--stop`` to stop it).
 
-This is a static command with a placeholder that can also be removed in ``config/static_commands.ini``.
 
+#### `!gold`
 
-### Adding own command classes
+Prints (or whispers) the currency amount the user has.
 
-Sure, it's possible but I haven't finished the documentation.
+#### `!pay (user) (amount)`
 
-Maybe it helps you to create one by copying the ``commands/Test_Command.php`` and try something on your own.
-
-Documentation coming later...
+Transfers an amount to another user.
