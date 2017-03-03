@@ -1,13 +1,6 @@
 # Simple PHP Twitch.tv Bot
 
-
-## Installation Notes
-
-### Starting additional daemons from Features
-e.g. php bin/run currency
-
-### Stopping additional daemons from Features
-e.g. php bin/run currency --stop
+This README is Work-In-Progress! There may be errors or deprecated settings in here.
 
 ----
 
