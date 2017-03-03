@@ -9,6 +9,7 @@
  * @link        https://github.com/saitho/simple-twitch-bot/
  */
 require_once('_init.php');
+define('CONTEXT', 'bot');
 
 $oIRCBot = new \saitho\TwitchBot\Core\IRCBot(
 	$oConfig->get( 'irc.server' ),

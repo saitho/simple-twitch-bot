@@ -22,6 +22,9 @@ class Logger {
 	 * @param string $sType
 	 */
 	static public function cliLog( $sMessage, $sType = 'INFO' ) {
+		if(CONTEXT != 'bot') {
+			return;
+		}
 		if(empty(self::$logFile)) {
 			self::$logFile = BASE_PATH . 'logs/'.date('Y-m-d_H-i-s').'.log';
 		}

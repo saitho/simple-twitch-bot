@@ -20,5 +20,13 @@
             "name": "Mario Lubenka",
             "email": "mario.lubenka@googlemail.com"
         }
-    ]
+    ],
+    "scripts": {
+        "post-install-cmd": [
+            "saitho\\TwitchBot\\Core\\Installer::install"
+        ],
+        "post-update-cmd": [
+            "saitho\\TwitchBot\\Core\\Installer::install"
+        ]
+    }
 }

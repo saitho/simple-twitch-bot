@@ -20,24 +20,37 @@ class Config {
     /**
      * @var array
      */
-    private $__aConfig = array();
+    private static $__aConfig = array();
 	
-	static private $config = [];
+	
+	static public $configDir = BASE_PATH . 'config/';
+	static public $systemExampleConfigPath = BASE_PATH . 'src/Core/config.example.ini';
+	static public $featureExampleConfigPath = BASE_PATH . 'src/Features/%s/config.example.ini';
+	static private $featureConfig = [];
 	static public function getFeatureConfig($featureName) {
-		if(!array_key_exists($featureName, self::$config)) {
-			self::$config[$featureName] = parse_ini_file(BASE_PATH.'src/Features/'.$featureName.'/config.ini', true);
+		if(!array_key_exists($featureName, self::$featureConfig)) {
+			self::$featureConfig[$featureName] = parse_ini_file(self::$configDir.'/config.'.$featureName.'.ini', true);
 		}
-		return self::$config[$featureName];
+		return self::$featureConfig[$featureName];
+	}
+	
+	public static function hasFeatureConf($featureName) {
+		return file_exists(self::$configDir.'/config.'.$featureName.'.ini');
 	}
 
     /**
      * Parses configs/config.ini file and saves it to an array
      */
     public function __construct() {
-        $this->__aConfig = parse_ini_file( BASE_PATH . 'config/config.ini', false, INI_SCANNER_NORMAL );
-		Logger::cliLog( 'Configuration loaded from config/config.ini', 'SETUP' );
+		self::initialize();
     }
-
+    
+    public static function initialize() {
+		if(file_exists(self::$configDir.'config.ini')) {
+			self::$__aConfig = parse_ini_file( self::$configDir.'config.ini', true );
+			Logger::cliLog( 'Configuration loaded from config/config.ini', 'SETUP' );
+		}
+	}
 
     /**
      * @return Config
@@ -55,7 +68,14 @@ class Config {
 	 * @return bool
 	 */
 	public function hasKey( $sKey ) {
-		return array_key_exists($sKey, $this->__aConfig);
+		$config = self::$__aConfig;
+		foreach (explode('.', $sKey) AS $sKeyPart) {
+			if(!array_key_exists($sKeyPart, $config)) {
+				return false;
+			}
+			$config = $config[$sKeyPart];
+		}
+		return true;
 	}
 	
 	/**
@@ -69,7 +89,11 @@ class Config {
 		if(!$this->hasKey($sKey)) {
 			return null;
 		}
-		return $this->__aConfig[ $sKey ];
+		$configElement = self::$__aConfig;
+		foreach (explode('.', $sKey) AS $sKeyPart) {
+			$configElement = $configElement[$sKeyPart];
+		}
+		return $configElement;
 	}
 
     /**
