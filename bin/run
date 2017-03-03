@@ -9,16 +9,45 @@
  * @author      Mario Lubenka <github.com/saitho>
  * @link        https://github.com/saitho/simple-twitch-bot/
  */
-define('CONTEXT', 'bot');
+
+// Separate options and arguments
+$arguments = [];
+foreach ($argv as $k => $arg) {
+    if($k == 0) {
+        continue;
+    }
+	if(substr($arg, 0, 2) != '--') {
+		continue;
+	}
+	$arguments[] = substr($arg, 2);
+}
+
+$options = [];
+foreach ($argv as $k => $arg) {
+    if($k == 0) {
+        continue;
+    }
+	if(substr($arg, 0, 2) == '--') {
+		continue;
+	}
+	$options[] = $arg;
+}
+
+
+$context = '';
+if(empty($options[0])) {
+    $context = 'bot';
+}
+define('CONTEXT', $context);
 require_once(realpath( dirname( __FILE__ ) . '/../' ).'/src/_init.php');
 
 $commander = new \saitho\TwitchBot\Core\Commander();
 
 $daemonClass = '\saitho\TwitchBot\Features\Currency\Daemon\CurrencyDaemon';
-if(!empty($argv[1])) {
-   $daemonClass = \saitho\TwitchBot\Core\DaemonManager::getDaemon($argv[1]);
+if(!empty($options[0])) {
+   $daemonClass = \saitho\TwitchBot\Core\DaemonManager::getDaemon($options[0]);
    if(empty($daemonClass)) {
-       throw new Exception('Missing daemon class for '.$argv[1]);
+       throw new Exception('Missing daemon class for '.$options[0]);
    }elseif(!class_exists($daemonClass)) {
 	   throw new Exception('Class "'.$daemonClass.'" not found."');
    }

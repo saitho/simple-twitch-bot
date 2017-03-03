@@ -23,13 +23,36 @@ abstract class Daemon {
 		$this->commander = $commander;
 	}
 	
+	public function getCLIOptions() {
+		global $argv;
+		$options = [];
+		foreach ($argv as $k => $arg) {
+			if(substr($arg, 0, 2) == '--') {
+				continue;
+			}
+			$options[] = $arg;
+		}
+		return $options;
+	}
+	
+	public function getCLIArguments() {
+		global $argv;
+		$arguments = [];
+		foreach ($argv as $k => $arg) {
+			if(substr($arg, 0, 2) != '--') {
+				continue;
+			}
+			$arguments[] = substr($arg, 2);
+		}
+		return $arguments;
+	}
+	
 	private $runmode = [];
 	private $options = [];
 	public function __construct() {
 		if(empty($this->appName)) {
 			throw new \Exception('Missing appName for Daemon class '.get_called_class());
 		}
-		global $argv;
 		$this->runmode = array(
 			'stop' => false,
 			'no-daemon' => false,
@@ -37,11 +60,8 @@ abstract class Daemon {
 			'write-initd' => false,
 		);
 		
-		// Scan command line attributes for allowed arguments
-		foreach ($argv as $k => $arg) {
-			if (substr($arg, 0, 2) == '--' && isset($this->runmode[substr($arg, 2)])) {
-				$this->runmode[substr($arg, 2)] = true;
-			}
+		foreach ($this->getCLIArguments() AS $argument) {
+			$this->runmode[$argument] = true;
 		}
 		
 		$this->options = [

@@ -29,7 +29,7 @@ class Config {
 	static private $featureConfig = [];
 	static public function getFeatureConfig($featureName) {
 		if(!array_key_exists($featureName, self::$featureConfig)) {
-			self::$featureConfig[$featureName] = parse_ini_file(self::$configDir.'/config.'.$featureName.'.ini', true);
+			self::$featureConfig[$featureName] = parse_ini_file(self::$configDir.'config.'.strtolower($featureName).'.ini', true);
 		}
 		return self::$featureConfig[$featureName];
 	}

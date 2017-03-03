@@ -31,7 +31,6 @@ class Logger {
 		
 		$sLog = '[' . date( 'Y-m-d H:i:s' ) . '] [' . str_pad( $sType, 11, ' ', STR_PAD_BOTH ) . '] ' . $sMessage . PHP_EOL;
 		
-		echo $sLog;
 		file_put_contents( self::$logFile, $sLog, FILE_APPEND );
 		
 		if( $sType == 'CRITICAL' ) {

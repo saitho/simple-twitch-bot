@@ -45,6 +45,7 @@ class Installer {
 		
 		// make bin/cli executable
 		chmod(BASE_PATH.'bin/run', 0770);
+		chmod(BASE_PATH.'logs', 0770);
 		
 		if(!file_exists($configFilePath)) {
 			// Create config file if it doesn't already exist
