@@ -6,8 +6,14 @@
 ### Starting the Twitch Bot
 php bin/run
 
+### Stopping the Twitch Bot
+php bin/run --stop
+
 ### Starting additional daemons from Features
 e.g. php bin/run currency
+
+### Stopping additional daemons from Features
+e.g. php bin/run currency --stop
 
 ----
 
