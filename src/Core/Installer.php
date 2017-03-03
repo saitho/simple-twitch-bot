@@ -12,6 +12,7 @@ namespace saitho\TwitchBot\Core;
 use Composer\IO\IOInterface;
 use Composer\Script\Event;
 
+define('CONTEXT', '');
 require_once(realpath( dirname( __FILE__ ) . '/../' ).'/_init.php');
 
 class Installer {
