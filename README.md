@@ -3,8 +3,7 @@
 
 ## Installation Notes
 
-chmod a+x ./src/Features/Currency/bin/currency.php
-php ./src/Features/Currency/bin/currency.php
+php ./src/Features/Currency/bin/currency
 
 ----
 
