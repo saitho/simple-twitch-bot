@@ -24,6 +24,8 @@ class Currency extends Feature {
 	
 	static public function init() {
 		ViewerManager::registerHook(ViewerManager::ACTION_LEAVE, __CLASS__.'::userLeave');
-		DaemonManager::registerDaemon('currency', CurrencyDaemon::class);
+		//DaemonManager::registerDaemon('currency', CurrencyDaemon::class);
+		//DaemonManager::runDaemon(_DIR__.'/bin/currency');
+		//var_dump($currencyDaemon);
 	}
 }

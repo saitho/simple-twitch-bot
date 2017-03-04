@@ -23,7 +23,16 @@ class Gold extends Command {
      * @return void
      */
     public function doExecute() {
-		$message = 'Not implemented yet.';
+	
+		$userFile = BASE_PATH.'data/viewers/'.$this->_sSender.'.ini';
+		if(file_exists($userFile)) {
+			$userData = parse_ini_file($userFile, true);
+		}else{
+			touch($userFile);
+			$userData = ['currency' => 0];
+		}
+    	
+		$message = $userData['currency'].' Gold';
 	
 		$config = Config::getFeatureConfig('Currency');
     	if($config['bot']['whisper_gold']) {

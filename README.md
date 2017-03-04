@@ -2,6 +2,12 @@
 
 This README is Work-In-Progress! There may be errors or deprecated settings in here.
 
+
+data/ -> g+w
+data/viewers/ -> g+w
+logs/ -> g+w
+src/Features/Steam/gamelist.php -> g+w
+
 ----
 
 This is based on Crease29's Twitch bot but it comes with a different structure.
