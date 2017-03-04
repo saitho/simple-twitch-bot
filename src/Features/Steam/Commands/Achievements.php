@@ -35,8 +35,9 @@ class Achievements extends Command {
     	
 		/** @var AbstractAPI $api */
 		$config = Config::getFeatureConfig('Steam');
-		
-		$api = new \saitho\TwitchBot\Features\Steam\Helper\Achievements($config['games']);
+	
+		$gameList = require(__DIR__.'/../gamelist.php');
+		$api = new \saitho\TwitchBot\Features\Steam\Helper\Achievements($gameList);
 	
 		try {
 			$data = $api->fetchData(['profileId' => $config['settings']['streamer_steamId'], 'game' => $game]);

@@ -35,8 +35,9 @@ class Playtime extends Command {
     	
 		/** @var AbstractAPI $api */
 		$config = Config::getFeatureConfig('Steam');
-		
-		$api = new \saitho\TwitchBot\Features\Steam\Helper\Playtime($config['games']);
+	
+		$gameList = require(__DIR__.'/../gamelist.php');
+		$api = new \saitho\TwitchBot\Features\Steam\Helper\Playtime($gameList);
 	
 		try {
 			$data = $api->fetchData(['profileId' => $config['settings']['streamer_steamId'], 'game' => $game]);
