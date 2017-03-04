@@ -25,7 +25,10 @@ class Steam extends Feature {
 		}
 		// Save new game list to gamelist.ini
 		$file = fopen(__DIR__.'/gamelist.php', 'w') or die('Unable to open file!');
-		fwrite($file, '<?php'.PHP_EOL.'return '.var_export($fileContent, true).';');
+		fwrite(
+			$file,
+			'<?php'.PHP_EOL.'// Last update: '.date('Y-m-d, H:i').PHP_EOL.'return '.var_export($fileContent, true).';'
+		);
 		fclose($file);
 	}
 	static public function init() {
