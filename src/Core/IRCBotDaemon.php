@@ -12,10 +12,27 @@
 namespace saitho\TwitchBot\Core;
 
 class IRCBotDaemon extends Daemon {
-	public function process(Daemon $daemon, &$cnt) {
-		if(empty($this->commander)) {
-			throw new \Exception('Daemon is missing the Commander.');
+	protected  $loop_interval = 1;
+	
+	protected $appName = '_bot';
+	
+	public function signal($signal) {
+		$this->log('Signal '.$signal);
+		echo 'Signal...';
+		switch ($signal) {
+			case SIGHUP: // restart
+			case SIGINT: // shutdown
+			case SIGTERM: // shutdown
+				// Stop other running daemons
+				echo 'Shutdown...';
+			$this->log('Shutdown');
+				mail('mario.lubenka@googlemail.com', 'Test', 'Testmail', 'From: mario.lubenka@googlemail.com');
+				break;
 		}
+		parent::signal($signal);
+	}
+	
+	public function execute() {
 		$oConfig = Config::getInstance();
 		$oIRCBot = new IRCBot(
 			$oConfig->get( 'irc.server' ),
@@ -24,7 +41,24 @@ class IRCBotDaemon extends Daemon {
 			#explode( ',', $oConfig->get( 'irc.channels' ) ),
 			[ '#'.$oConfig->get('app.channelName') ],
 			$oConfig->get( 'bot.oauth' ),
-			$this->commander
+			new Commander()
 		);
 	}
+	
+	// public function process(Daemon $daemon, &$cnt) {
+	// 	if(empty($this->commander)) {
+	// 		throw new \Exception('Daemon is missing the Commander.');
+	// 	}
+	// 	$oConfig = Config::getInstance();
+	// 	$oIRCBot = new IRCBot(
+	// 		$oConfig->get( 'irc.server' ),
+	// 		$oConfig->get( 'irc.port' ),
+	// 		$oConfig->get( 'bot.nick' ),
+	// 		#explode( ',', $oConfig->get( 'irc.channels' ) ),
+	// 		[ '#'.$oConfig->get('app.channelName') ],
+	// 		$oConfig->get( 'bot.oauth' ),
+	// 		$this->commander
+	// 	);
+	// 	return Daemon::RETURN_ABORT;
+	// }
 }

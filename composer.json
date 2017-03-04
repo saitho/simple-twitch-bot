@@ -4,13 +4,13 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/saitho/system_daemon"
+            "url": "https://github.com/theintz/PHP-Daemon"
         }
     ],
     "require": {
         "symfony/translation": "^3.2",
         "symfony/config": "^3.2",
-        "saitho/system_daemon": "dev-master"
+        "theintz/php-daemon": "^3.0"
     },
     "autoload": {
         "psr-4": {"saitho\\TwitchBot\\": "src/"}

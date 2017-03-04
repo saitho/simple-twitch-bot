@@ -41,20 +41,25 @@ if(empty($options[0])) {
 define('CONTEXT', $context);
 require_once(realpath( dirname( __FILE__ ) . '/../' ).'/src/_init.php');
 
+\saitho\TwitchBot\Core\IRCBotDaemon::setFilename(__FILE__);
+\saitho\TwitchBot\Core\IRCBotDaemon::getInstance()->run();
+die;
 $commander = new \saitho\TwitchBot\Core\Commander();
 
-$daemonClass = '\saitho\TwitchBot\Features\Currency\Daemon\CurrencyDaemon';
-if(!empty($options[0])) {
-   $daemonClass = \saitho\TwitchBot\Core\DaemonManager::getDaemon($options[0]);
-   if(empty($daemonClass)) {
-       throw new Exception('Missing daemon class for '.$options[0]);
-   }elseif(!class_exists($daemonClass)) {
-	   throw new Exception('Class "'.$daemonClass.'" not found."');
-   }
-}
+$daemonClass = '\saitho\TwitchBot\Core\IRCBotDaemon';
+// if(!empty($options[0])) {
+//    $daemonClass = \saitho\TwitchBot\Core\DaemonManager::getDaemon($options[0]);
+//    if(empty($daemonClass)) {
+//        throw new Exception('Missing daemon class for '.$options[0]);
+//    }elseif(!class_exists($daemonClass)) {
+// 	   throw new Exception('Class "'.$daemonClass.'" not found."');
+//    }
+// }
 
 /** @var \saitho\TwitchBot\Core\Daemon $daemon */
-$daemon = new $daemonClass();
-$daemon->setCommander($commander);
-$daemon->call();
+//$daemon = new $daemonClass();
+if(!in_array('stop', $arguments)) {
+    //$daemon->setCommander($commander);
+}
+$daemonClass::getInstance()->run();
 ?>

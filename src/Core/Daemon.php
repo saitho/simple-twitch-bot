@@ -10,6 +10,25 @@
  */
 namespace saitho\TwitchBot\Core;
 
+abstract class Daemon extends \Theintz\PhpDaemon\Daemon {
+	protected $appName = '';
+	
+	public function setup() {
+		if(true) {
+			//$this->error('Daemon already running. Shutting down.');
+			//$this->shutdown(true);
+		}
+	}
+	
+	public function log_file() {
+		$dir = BASE_PATH.'logs';
+		if (@file_exists($dir) == false) {
+			@mkdir($dir, 0777, true);
+		}
+		return $dir.'/daemon_'.$this->appName.'.log';
+	}
+}
+/*
 abstract class Daemon {
 	
 	const RETURN_SUCCESS = 0;
@@ -124,11 +143,6 @@ abstract class Daemon {
 			}
 		}
 		
-		// Run your code
-		// Here comes your own actual code
-		
-		// This variable keeps track of how many 'runs' or 'loops' your daemon has
-		// done so far. For example purposes, we're quitting on 3.
 		$cnt = 1;
 		while (!\System_Daemon::isDying()) {
 			$runningOkay = $this->process($this, $cnt);
@@ -140,7 +154,7 @@ abstract class Daemon {
 		}
 		
 		// Shut down the daemon nicely
-		// This is ignored if the class is actually running in the foreground
 		\System_Daemon::stop();
 	}
 }
+ */
